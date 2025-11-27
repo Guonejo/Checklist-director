@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { generarPDFGraficas } from '../utils/pdfGenerator'
 import ModalValidacion from './ModalValidacion'
+import ModalConfirmacion from './ModalConfirmacion'
 import './Checklist.css'
 
 const STORAGE_KEY = 'checklist-graficas-data'
@@ -147,16 +148,23 @@ const ChecklistGraficas = () => {
     }
   }
 
-  // Función para limpiar los datos guardados
-  const limpiarDatos = () => {
-    if (window.confirm('¿Estás seguro de que deseas limpiar todos los datos guardados?')) {
-      localStorage.removeItem(STORAGE_KEY)
-      window.location.reload()
-    }
-  }
-
   const [mostrarModal, setMostrarModal] = useState(false)
   const [actividadesFaltantes, setActividadesFaltantes] = useState<string[]>([])
+  const [mostrarModalLimpiar, setMostrarModalLimpiar] = useState(false)
+
+  // Función para limpiar los datos guardados
+  const limpiarDatos = () => {
+    setMostrarModalLimpiar(true)
+  }
+
+  const handleConfirmarLimpiar = () => {
+    localStorage.removeItem(STORAGE_KEY)
+    window.location.reload()
+  }
+
+  const handleCancelarLimpiar = () => {
+    setMostrarModalLimpiar(false)
+  }
 
   const validarActividades = (): string[] => {
     const faltantes: string[] = []
@@ -610,6 +618,17 @@ const ChecklistGraficas = () => {
           actividadesFaltantes={actividadesFaltantes}
           onConfirmar={handleConfirmarGenerar}
           onCancelar={handleCancelarGenerar}
+        />
+      )}
+      
+      {mostrarModalLimpiar && (
+        <ModalConfirmacion
+          titulo="🗑️ Limpiar Datos"
+          mensaje="¿Estás seguro de que deseas limpiar todos los datos guardados? Esta acción no se puede deshacer."
+          textoConfirmar="Sí, limpiar datos"
+          textoCancelar="Cancelar"
+          onConfirmar={handleConfirmarLimpiar}
+          onCancelar={handleCancelarLimpiar}
         />
       )}
     </div>
