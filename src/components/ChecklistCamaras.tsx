@@ -289,36 +289,42 @@ const ChecklistCamaras = () => {
 
   return (
     <div className="checklist-container">
-      <div className="checklist-wrapper">
+      <div className="checklist-card">
         <div className="checklist-header">
-          <img src={`${import.meta.env.BASE_URL}img/icon%20iuc.png`} alt="Logo IUC" className="logo-iuc" />
-          <h1>Checklist de Cámaras</h1>
-          <div className="header-info">
-            <div className="form-group inline">
-              <label>
-                Operador <span className="required">*</span>
-              </label>
-              <input
-                type="text"
-                name="operador"
-                value={formData.operador}
-                onChange={handleChange}
-                className="header-input"
-                required
-                placeholder="Nombre del operador"
-              />
-            </div>
-            <div className="form-group inline">
-              <label>Fecha</label>
-              <input
-                type="date"
-                name="fecha"
-                value={formData.fecha}
-                onChange={handleChange}
-                className="header-input"
-                required
-                readOnly
-              />
+          <div className="header-logo-title">
+            <img src={`${import.meta.env.BASE_URL}img/icon%20iuc.png`} alt="Logo IUC" className="logo-iuc" />
+            <div>
+              <h1>CHECKLIST Cámaras Transmisión IUC Viña del Mar Etchevers</h1>
+              <div className="header-info">
+                <div className="form-group inline">
+                  <label htmlFor="operador">
+                    OPERADOR: <span style={{color: 'red'}}>*</span>
+                  </label>
+                  <input
+                    type="text"
+                    id="operador"
+                    name="operador"
+                    value={formData.operador}
+                    onChange={handleChange}
+                    className="header-input"
+                    required
+                    placeholder="Nombre del operador"
+                  />
+                </div>
+                <div className="form-group inline">
+                  <label htmlFor="fecha">FECHA:</label>
+                  <input
+                    type="date"
+                    id="fecha"
+                    name="fecha"
+                    value={formData.fecha}
+                    onChange={handleChange}
+                    className="header-input"
+                    required
+                    readOnly
+                  />
+                </div>
+              </div>
             </div>
           </div>
           <button className="btn-volver" onClick={() => navigate('/')}>
