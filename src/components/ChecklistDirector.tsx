@@ -347,7 +347,7 @@ const ChecklistDirector = () => {
         <form className="checklist-form">
           {/* Setup and Pre-Transmission Checks */}
           <div className="form-section">
-            <h2>1. Setup and Pre-Transmission Checks</h2>
+            <h2>1. Configuración y Verificaciones Pre-Transmisión</h2>
             
             <div className="actividad-item">
               <div className="actividad-number">1</div>
@@ -560,7 +560,7 @@ const ChecklistDirector = () => {
 
           {/* Pre-Live Countdown */}
           <div className="form-section">
-            <h2>2. Pre-Live Countdown</h2>
+            <h2>2. Cuenta Regresiva Pre-En Vivo</h2>
             
             <div className="actividad-item">
               <div className="actividad-number">13</div>
@@ -674,7 +674,7 @@ const ChecklistDirector = () => {
 
           {/* Post-Transmission */}
           <div className="form-section">
-            <h2>4. Post-Transmission</h2>
+            <h2>4. Post-Transmisión</h2>
             
             <div className="actividad-item">
               <div className="actividad-number">23</div>

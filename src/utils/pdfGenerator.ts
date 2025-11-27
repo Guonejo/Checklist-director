@@ -164,6 +164,10 @@ export const generarPDFDirector = (data: ChecklistDirectorData) => {
   
   doc.setFont('helvetica', 'bold')
   doc.setTextColor(102, 126, 234)
+  // Fondo blanco para el cuadro de fecha
+  doc.setFillColor(255, 255, 255)
+  doc.setDrawColor(102, 126, 234)
+  doc.setLineWidth(0.3)
   doc.roundedRect(margin + 70, yPosition - 4, 55, 8, 2, 2, 'FD')
   doc.text(`FECHA:`, margin + 73, yPosition + 2)
   doc.setFont('helvetica', 'normal')
