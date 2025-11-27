@@ -1,0 +1,140 @@
+.menu-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.menu-card {
+  background: white;
+  border-radius: 20px;
+  padding: 3rem;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  max-width: 800px;
+  width: 100%;
+  text-align: center;
+}
+
+.menu-title {
+  font-size: 2.5rem;
+  color: #333;
+  margin-bottom: 0.5rem;
+  font-weight: 700;
+}
+
+.menu-subtitle {
+  font-size: 1.1rem;
+  color: #666;
+  margin-bottom: 3rem;
+}
+
+.menu-buttons {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+.menu-button {
+  background: white;
+  border: 3px solid #e0e0e0;
+  border-radius: 15px;
+  padding: 2rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  text-align: center;
+}
+
+.menu-button:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.menu-button.director:hover {
+  border-color: #667eea;
+  background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%);
+}
+
+.menu-button.graficas:hover {
+  border-color: #f093fb;
+  background: linear-gradient(135deg, #f093fb15 0%, #f5576c15 100%);
+}
+
+.button-icon {
+  font-size: 4rem;
+}
+
+.button-content h2 {
+  font-size: 1.5rem;
+  color: #333;
+  margin-bottom: 0.5rem;
+}
+
+.button-content p {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+@media (max-width: 768px) {
+  .menu-container {
+    padding: 1rem;
+  }
+
+  .menu-card {
+    padding: 2rem;
+  }
+  
+  .menu-title {
+    font-size: 2rem;
+  }
+  
+  .menu-buttons {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .menu-container {
+    padding: 0.5rem;
+  }
+
+  .menu-card {
+    padding: 1.5rem;
+    border-radius: 15px;
+  }
+  
+  .menu-title {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .menu-subtitle {
+    font-size: 0.95rem;
+    margin-bottom: 2rem;
+  }
+  
+  .menu-buttons {
+    gap: 1.5rem;
+  }
+
+  .menu-button {
+    padding: 1.5rem;
+  }
+
+  .button-icon {
+    font-size: 3rem;
+  }
+
+  .button-content h2 {
+    font-size: 1.2rem;
+  }
+
+  .button-content p {
+    font-size: 0.85rem;
+  }
+}
+
