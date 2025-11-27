@@ -31,19 +31,19 @@ interface ChecklistDirectorData {
   actividad6_claveYoutube: boolean
   actividad7_nombreGrabacion: boolean
   actividad8_transmisionActivada: boolean
-  actividad9_camara1_horiz: boolean
+  actividad9_camara1_horiz: string
   actividad9_camara1_diafragma: string
   actividad9_camara1_colorTemp: string
   actividad9_camara1_exposicion: string
   actividad9_camara1_ganancia: string
   actividad9_camara1_obtura: string
-  actividad9_camara2_horiz: boolean
+  actividad9_camara2_horiz: string
   actividad9_camara2_diafragma: string
   actividad9_camara2_colorTemp: string
   actividad9_camara2_exposicion: string
   actividad9_camara2_ganancia: string
   actividad9_camara2_obtura: string
-  actividad9_camara3_horiz: boolean
+  actividad9_camara3_horiz: string
   actividad9_camara3_diafragma: string
   actividad9_camara3_colorTemp: string
   actividad9_camara3_exposicion: string
@@ -112,19 +112,19 @@ const ChecklistDirector = () => {
     actividad6_claveYoutube: false,
     actividad7_nombreGrabacion: false,
     actividad8_transmisionActivada: false,
-    actividad9_camara1_horiz: false,
+    actividad9_camara1_horiz: '',
     actividad9_camara1_diafragma: '',
     actividad9_camara1_colorTemp: '',
     actividad9_camara1_exposicion: '',
     actividad9_camara1_ganancia: '',
     actividad9_camara1_obtura: '',
-    actividad9_camara2_horiz: false,
+    actividad9_camara2_horiz: '',
     actividad9_camara2_diafragma: '',
     actividad9_camara2_colorTemp: '',
     actividad9_camara2_exposicion: '',
     actividad9_camara2_ganancia: '',
     actividad9_camara2_obtura: '',
-    actividad9_camara3_horiz: false,
+    actividad9_camara3_horiz: '',
     actividad9_camara3_diafragma: '',
     actividad9_camara3_colorTemp: '',
     actividad9_camara3_exposicion: '',
@@ -182,7 +182,14 @@ const ChecklistDirector = () => {
       const checked = (e.target as HTMLInputElement).checked
       setFormData(prev => ({ ...prev, [name]: checked }))
     } else {
-      setFormData(prev => ({ ...prev, [name]: value }))
+      // Validar campos de horizonte para que solo acepten números
+      if (name.includes('_horiz')) {
+        // Solo permitir números y máximo 2 caracteres
+        const numericValue = value.replace(/[^0-9]/g, '').slice(0, 2)
+        setFormData(prev => ({ ...prev, [name]: numericValue }))
+      } else {
+        setFormData(prev => ({ ...prev, [name]: value }))
+      }
     }
   }
 
@@ -224,8 +231,10 @@ const ChecklistDirector = () => {
     if (!formData.actividad7_nombreGrabacion) faltantes.push('7. Cambiar nombre de grabación')
     if (!formData.actividad8_transmisionActivada) faltantes.push('8. Activar transmisión en ATEM')
     
-    // Actividad 9 - Verificar si al menos una cámara está configurada
-    const actividad9Completa = formData.actividad9_camara1_horiz || formData.actividad9_camara2_horiz || formData.actividad9_camara3_horiz
+    // Actividad 9 - Verificar si al menos una cámara está configurada (tiene horizonte)
+    const actividad9Completa = (formData.actividad9_camara1_horiz && formData.actividad9_camara1_horiz !== '') || 
+                               (formData.actividad9_camara2_horiz && formData.actividad9_camara2_horiz !== '') || 
+                               (formData.actividad9_camara3_horiz && formData.actividad9_camara3_horiz !== '')
     if (!actividad9Completa) faltantes.push('9. Configuración de cámaras')
 
     if (!formData.actividad10_audioCamarasApagado) faltantes.push('10. Apagar canales de audio de cámaras')
@@ -469,7 +478,7 @@ const ChecklistDirector = () => {
                   <div className="camara-group">
                     <h4>Cámara 1 (G70)</h4>
                     <div className="camara-inputs">
-                      <label><input type="checkbox" name="actividad9_camara1_horiz" checked={formData.actividad9_camara1_horiz} onChange={handleChange} /> Horiz.</label>
+                      <input type="text" name="actividad9_camara1_horiz" value={formData.actividad9_camara1_horiz} onChange={handleChange} placeholder="Horiz." className="tiny-input" maxLength={2} pattern="[0-9]*" inputMode="numeric" />
                       <input type="text" name="actividad9_camara1_diafragma" value={formData.actividad9_camara1_diafragma} onChange={handleChange} placeholder="f/" className="tiny-input" />
                       <input type="text" name="actividad9_camara1_colorTemp" value={formData.actividad9_camara1_colorTemp} onChange={handleChange} placeholder="kelvin" className="tiny-input" />
                       <input type="text" name="actividad9_camara1_exposicion" value={formData.actividad9_camara1_exposicion} onChange={handleChange} placeholder="expos." className="tiny-input" />
@@ -480,7 +489,7 @@ const ChecklistDirector = () => {
                   <div className="camara-group">
                     <h4>Cámara 2 (G50)</h4>
                     <div className="camara-inputs">
-                      <label><input type="checkbox" name="actividad9_camara2_horiz" checked={formData.actividad9_camara2_horiz} onChange={handleChange} /> Horiz.</label>
+                      <input type="text" name="actividad9_camara2_horiz" value={formData.actividad9_camara2_horiz} onChange={handleChange} placeholder="Horiz." className="tiny-input" maxLength={2} pattern="[0-9]*" inputMode="numeric" />
                       <input type="text" name="actividad9_camara2_diafragma" value={formData.actividad9_camara2_diafragma} onChange={handleChange} placeholder="f/" className="tiny-input" />
                       <input type="text" name="actividad9_camara2_colorTemp" value={formData.actividad9_camara2_colorTemp} onChange={handleChange} placeholder="kelvin" className="tiny-input" />
                       <input type="text" name="actividad9_camara2_exposicion" value={formData.actividad9_camara2_exposicion} onChange={handleChange} placeholder="expos." className="tiny-input" />
@@ -491,7 +500,7 @@ const ChecklistDirector = () => {
                   <div className="camara-group">
                     <h4>Cámara 3 (G20)</h4>
                     <div className="camara-inputs">
-                      <label><input type="checkbox" name="actividad9_camara3_horiz" checked={formData.actividad9_camara3_horiz} onChange={handleChange} /> Horiz.</label>
+                      <input type="text" name="actividad9_camara3_horiz" value={formData.actividad9_camara3_horiz} onChange={handleChange} placeholder="Horiz." className="tiny-input" maxLength={2} pattern="[0-9]*" inputMode="numeric" />
                       <input type="text" name="actividad9_camara3_diafragma" value={formData.actividad9_camara3_diafragma} onChange={handleChange} placeholder="f/" className="tiny-input" />
                       <input type="text" name="actividad9_camara3_colorTemp" value={formData.actividad9_camara3_colorTemp} onChange={handleChange} placeholder="kelvin" className="tiny-input" />
                       <input type="text" name="actividad9_camara3_exposicion" value={formData.actividad9_camara3_exposicion} onChange={handleChange} placeholder="expos." className="tiny-input" />

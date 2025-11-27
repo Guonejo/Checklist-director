@@ -267,9 +267,11 @@ export const generarPDFDirector = (data: ChecklistDirectorData) => {
     if (act.key === 'actividad4_velocidadInternet') {
       return !!(data.actividad4_velocidadInternet && data.actividad4_velocidadInternet !== '' && data.actividad4_velocidadInternet !== 'N/A')
     }
-    // Si es actividad 9 (cámaras), verificar si al menos una cámara está configurada
+    // Si es actividad 9 (cámaras), verificar si al menos una cámara está configurada (tiene horizonte)
     if (act.key === 'actividad9_camaras') {
-      return !!(data.actividad9_camara1_horiz || data.actividad9_camara2_horiz || data.actividad9_camara3_horiz)
+      return !!(data.actividad9_camara1_horiz && data.actividad9_camara1_horiz !== '') || 
+             !!(data.actividad9_camara2_horiz && data.actividad9_camara2_horiz !== '') || 
+             !!(data.actividad9_camara3_horiz && data.actividad9_camara3_horiz !== '')
     }
     if (act.isText || act.isComplex) return true
     const value = (data as any)[act.key]
@@ -390,7 +392,8 @@ export const generarPDFDirector = (data: ChecklistDirectorData) => {
       
       let tieneCamaras = false
       camaras.forEach(cam => {
-        if (data[`actividad9_camara${cam.num}_horiz`]) {
+        const horiz = data[`actividad9_camara${cam.num}_horiz`] || ''
+        if (horiz && horiz !== '') {
           tieneCamaras = true
           yPosition = addPageIfNeeded(doc, yPosition, pageHeight, 20)
           doc.setFontSize(8)
@@ -415,11 +418,11 @@ export const generarPDFDirector = (data: ChecklistDirectorData) => {
           doc.setTextColor(0, 0, 0)
           doc.text('✅', subOkX - doc.getTextWidth('✅') / 2, subOkY + 1.5)
           
-          // Formato mejorado: Cámara 1 (G70): f/12 | 32K | Exp:4324 | Gan:5435 | Obt:23523
+          // Formato mejorado: Cámara 1 (G70): Horiz: 12 | f/12 | 32K | Exp:4324 | Gan:5435 | Obt:23523
           doc.setFontSize(8)
           doc.setFont('helvetica', 'bold')
           doc.setTextColor(46, 125, 50) // Verde vibrante para cámaras configuradas
-          const textoCamara = `Cámara ${cam.num} (${cam.pos}): f/${diaf} | ${temp}K | Exp: ${expo} | Gan: ${gan} | Obt: ${obt}`
+          const textoCamara = `Cámara ${cam.num} (${cam.pos}): Horiz: ${horiz} | f/${diaf} | ${temp}K | Exp: ${expo} | Gan: ${gan} | Obt: ${obt}`
           doc.text(`  • ${textoCamara}`, margin + anchoOk + anchoNum + 3, yPosition + 3.5)
           yPosition += 6
           alturaTotal += 6
