@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { generarPDFGraficas } from '../utils/pdfGenerator'
+import ModalValidacion from './ModalValidacion'
 import './Checklist.css'
 
 interface ChecklistGraficasData {
@@ -98,8 +99,76 @@ const ChecklistGraficas = () => {
     }
   }
 
-  const handleImprimir = () => {
+  const [mostrarModal, setMostrarModal] = useState(false)
+  const [actividadesFaltantes, setActividadesFaltantes] = useState<string[]>([])
+
+  const validarActividades = (): string[] => {
+    const faltantes: string[] = []
+
+    // PC, cuentas, descargas (1-6)
+    if (!formData.actividad1_prenderPC) faltantes.push('1. Prender PC Gráficas')
+    if (!formData.actividad2_correo) faltantes.push('2. Introducir correo')
+    if (!formData.actividad3_perfilTransmision) faltantes.push('3. Ingresar a perfil de transmisión')
+    if (!formData.actividad4_whatsappQR) faltantes.push('4. Conectar WhatsApp mediante código QR')
+    if (!formData.actividad5_descargarMaterial) faltantes.push('5. Descargar material enviado')
+    if (!formData.actividad6_corroboraMaterial) faltantes.push('6. Abrir carpeta de descargas y corroborar material')
+
+    // Presenter (7-12)
+    if (!formData.actividad7_abrirPresenter) faltantes.push('7. Abrir presenter')
+    if (!formData.actividad8_seleccionarOrdenCulto) faltantes.push('8. Seleccionar orden del culto')
+    if (!formData.actividad9_actualizarFecha) faltantes.push('9. Actualizar fecha del día')
+    if (!formData.actividad10_verificarDiapositivaLogo) faltantes.push('10. Verificar diapositiva logo chroma')
+    if (!formData.actividad11_verificarVideos) faltantes.push('11. Verificar video introducción y outro')
+    if (!formData.actividad12_verificarVolumen) faltantes.push('12. Verificar volumen pc gráficas al 100%')
+
+    // Alabanzas (13-16)
+    if (!formData.actividad13_zonaBloqueAlabanzas) faltantes.push('13. Zona bloque 1 y 2 de alabanzas')
+    if (!formData.actividad14_eliminarAlabanzasAnteriores) faltantes.push('14. Eliminar alabanzas del culto anterior')
+    if (!formData.actividad15_seleccionarCanciones) faltantes.push('15. Seleccionar y abrir canciones')
+    if (!formData.actividad16_arrastrarAlabanzas) faltantes.push('16. Arrastrar alabanzas a barra izquierda')
+
+    // Medios (17-18)
+    if (!formData.actividad17_aplicarMedios) faltantes.push('17. Aplicar medios en presenter')
+    if (!formData.actividad18_importarMedios) faltantes.push('18. Importar medios (avisos y doxología)')
+
+    // Predica (19-22)
+    if (!formData.actividad19_abrirPPT) faltantes.push('19. Abrir ppt en carpeta descargas')
+    if (!formData.actividad20_editarSlice) faltantes.push('20. Editar slice en presenter')
+    if (!formData.actividad21_editarPPT) faltantes.push('21. Editar ppt en pantalla verde')
+    if (!formData.actividad22_sincronizarDatos) faltantes.push('22. Sincronizar datos en presenter')
+
+    // Durante la transmisión (23-27)
+    if (!formData.actividad23_reproducirVideoIntro) faltantes.push('23. Reproducir video introducción')
+    if (!formData.actividad24_bloqueAlabanzas) faltantes.push('24. Bloque 1 y 2 de alabanzas')
+    if (!formData.actividad25_seleccionarVersiculo) faltantes.push('25. Seleccionar versículo durante predica')
+    if (!formData.actividad26_seleccionarImagenDoxologia) faltantes.push('26. Seleccionar imagen en doxología')
+    if (!formData.actividad27_reproducirVideoOutro) faltantes.push('27. Reproducir video outro')
+
+    // Para finalizar (28-29)
+    if (!formData.actividad28_cerrarProgramas) faltantes.push('28. Cerrar programas y apagar pc gráficas')
+    if (!formData.actividad29_limpiarEstacion) faltantes.push('29. Dejar estación de gráficas limpia')
+
+    return faltantes
+  }
+
+  const handleTerminarServicio = () => {
+    const faltantes = validarActividades()
+    
+    if (faltantes.length > 0) {
+      setActividadesFaltantes(faltantes)
+      setMostrarModal(true)
+    } else {
+      generarPDFGraficas(formData)
+    }
+  }
+
+  const handleConfirmarGenerar = () => {
+    setMostrarModal(false)
     generarPDFGraficas(formData)
+  }
+
+  const handleCancelarGenerar = () => {
+    setMostrarModal(false)
   }
 
   return (
@@ -467,12 +536,20 @@ const ChecklistGraficas = () => {
           </div>
 
           <div className="form-actions">
-            <button type="button" className="btn-imprimir" onClick={handleImprimir}>
-              📄 Imprimir PDF
+            <button type="button" className="btn-imprimir" onClick={handleTerminarServicio}>
+              ✅ Terminar Servicio
             </button>
           </div>
         </form>
       </div>
+      
+      {mostrarModal && (
+        <ModalValidacion
+          actividadesFaltantes={actividadesFaltantes}
+          onConfirmar={handleConfirmarGenerar}
+          onCancelar={handleCancelarGenerar}
+        />
+      )}
     </div>
   )
 }

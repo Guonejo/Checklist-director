@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { generarPDFDirector } from '../utils/pdfGenerator'
+import ModalValidacion from './ModalValidacion'
 import './Checklist.css'
 
 interface ChecklistDirectorData {
@@ -162,8 +163,94 @@ const ChecklistDirector = () => {
     }
   }
 
-  const handleImprimir = () => {
+  const [mostrarModal, setMostrarModal] = useState(false)
+  const [actividadesFaltantes, setActividadesFaltantes] = useState<string[]>([])
+
+  const validarActividades = (): string[] => {
+    const faltantes: string[] = []
+
+    // Actividad 1
+    if (!formData.actividad1_ups) faltantes.push('1. Encender UPS bajo mesa de equipos')
+
+    // Actividad 2 - Verificar si al menos una sub-actividad está marcada
+    const actividad2Completa = formData.actividad2_atem_camara1 || formData.actividad2_atem_pcGraficas || 
+                               formData.actividad2_atem_monitorLED || formData.actividad2_atem_audio ||
+                               formData.actividad2_atem_rj45 || formData.actividad2_atem_usb || formData.actividad2_atem_power
+    if (!actividad2Completa) faltantes.push('2. Conectar puertos en ATEM MiniPro')
+
+    // Actividad 3
+    const actividad3Completa = formData.actividad3_luces_frontales || formData.actividad3_luces_contras || formData.actividad3_luces_laterales
+    if (!actividad3Completa) faltantes.push('3. Validar encendido de luces en salón principal')
+
+    // Actividad 4
+    if (!formData.actividad4_velocidadInternet || formData.actividad4_velocidadInternet === '') {
+      faltantes.push('4. Comprobar velocidad internet de subida')
+    }
+
+    // Actividades 5-12
+    if (!formData.actividad5_transmisionProgramada) faltantes.push('5. Programar transmisión en YOUTUBE STUDIO')
+    if (!formData.actividad6_claveYoutube) faltantes.push('6. Copiar clave YOUTUBE STUDIO')
+    if (!formData.actividad7_nombreGrabacion) faltantes.push('7. Cambiar nombre de grabación')
+    if (!formData.actividad8_transmisionActivada) faltantes.push('8. Activar transmisión en ATEM')
+    
+    // Actividad 9 - Verificar si al menos una cámara está configurada
+    const actividad9Completa = formData.actividad9_camara1_horiz || formData.actividad9_camara2_horiz || formData.actividad9_camara3_horiz
+    if (!actividad9Completa) faltantes.push('9. Configuración de cámaras')
+
+    if (!formData.actividad10_audioCamarasApagado) faltantes.push('10. Apagar canales de audio de cámaras')
+    if (!formData.actividad11_intercomunicadores) faltantes.push('11. Comprobar intercomunicadores')
+    if (!formData.actividad12_monitoresCecilia) faltantes.push('12. Validar encendido de monitores')
+
+    // Actividades 13-15
+    if (!formData.actividad13_videoMusicaTransmitir) faltantes.push('13. TRANSMITIR EN VIVO video/música')
+    if (!formData.actividad14_audioGraficasActivado) faltantes.push('14. Activar audio para canal gráficas')
+    if (!formData.actividad15_oracion) faltantes.push('15. Orar a Dios antes de transmitir')
+
+    // Actividades 16-22
+    if (!formData.actividad16_audioGraficasApagado || !formData.actividad16_mic1Encendido) faltantes.push('16. Apagar audio gráficas y encender MIC1')
+    if (!formData.actividad17_videoIntroDesactivado) faltantes.push('17. Desactivar video introducción')
+    if (!formData.actividad18_grabacionActiva) faltantes.push('18. Activar grabación en disco duro')
+    if (!formData.actividad19_comentariosYoutube) faltantes.push('19. Monitorear comentarios YOUTUBE')
+    if (!formData.actividad20_audioVideoYoutube) faltantes.push('20. Monitorear audio y video YOUTUBE')
+    if (!formData.actividad21_whatsappGrupo) faltantes.push('21. Monitorear grupo WhatsApp')
+    if (!formData.actividad22_intercomDirectorApagado) faltantes.push('22. Apagar micrófono intercomunicador')
+
+    // Actividades 23-30
+    if (!formData.actividad23_transmisionFinalizadaATEM) faltantes.push('23. Finalizar transmisión en ATEM')
+    if (!formData.actividad24_transmisionFinalizadaYoutube) faltantes.push('24. FINALIZAR TRANSMISIÓN en YOUTUBE')
+    if (!formData.actividad25_equiposGuardados) faltantes.push('25. Guardar cámaras y equipos')
+    
+    const actividad26Completa = formData.actividad26_focosApagados_frontales && 
+                                 formData.actividad26_focosApagados_contras && 
+                                 formData.actividad26_focosApagados_laterales
+    if (!actividad26Completa) faltantes.push('26. Confirmar apagado de focos')
+
+    if (!formData.actividad27_zapatillasApagadas || !formData.actividad27_routerEncendido) faltantes.push('27. Apagar zapatillas y confirmar router')
+    if (!formData.actividad28_upsApagado) faltantes.push('28. Apagar UPS')
+    if (!formData.actividad29_salaCerrada) faltantes.push('29. Confirmar cierre de sala')
+    if (!formData.actividad30_checklistEnviado) faltantes.push('30. Enviar CHECKLIST a WhatsApp')
+
+    return faltantes
+  }
+
+  const handleTerminarServicio = () => {
+    const faltantes = validarActividades()
+    
+    if (faltantes.length > 0) {
+      setActividadesFaltantes(faltantes)
+      setMostrarModal(true)
+    } else {
+      generarPDFDirector(formData)
+    }
+  }
+
+  const handleConfirmarGenerar = () => {
+    setMostrarModal(false)
     generarPDFDirector(formData)
+  }
+
+  const handleCancelarGenerar = () => {
+    setMostrarModal(false)
   }
 
   return (
@@ -643,12 +730,20 @@ const ChecklistDirector = () => {
           </div>
 
           <div className="form-actions">
-            <button type="button" className="btn-imprimir" onClick={handleImprimir}>
-              📄 Imprimir PDF
+            <button type="button" className="btn-imprimir" onClick={handleTerminarServicio}>
+              ✅ Terminar Servicio
             </button>
           </div>
         </form>
       </div>
+      
+      {mostrarModal && (
+        <ModalValidacion
+          actividadesFaltantes={actividadesFaltantes}
+          onConfirmar={handleConfirmarGenerar}
+          onCancelar={handleCancelarGenerar}
+        />
+      )}
     </div>
   )
 }
