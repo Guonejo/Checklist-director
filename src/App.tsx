@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
+import { HashRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
 import MenuPrincipal from './components/MenuPrincipal'
 import ChecklistDirector from './components/ChecklistDirector'
 import ChecklistGraficas from './components/ChecklistGraficas'
