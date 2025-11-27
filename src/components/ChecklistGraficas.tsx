@@ -94,12 +94,31 @@ const ChecklistGraficas = () => {
     actividad29_limpiarEstacion: false
   })
 
+  // Función para limpiar caracteres extraños del texto
+  const limpiarTexto = (texto: string): string => {
+    if (!texto || typeof texto !== 'string') return texto
+    // Eliminar BOM y caracteres de control invisibles
+    let limpio = texto.replace(/[\uFEFF\u200B-\u200D\u2060]/g, '')
+    // Eliminar caracteres problemáticos específicos como Ø=ÜÝ
+    limpio = limpio.replace(/[Ø=ÜÝ\u00D8\u00DC\u00DD\u00D6\u00C4\u00C5\u00C6\u00E6\u00C7\u00E7]/g, '')
+    // Eliminar cualquier carácter que no sea letra, número, espacio, puntuación o caracteres latinos
+    limpio = limpio.replace(/[^\w\s\u00C0-\u024F\u1E00-\u1EFF\u00A0-\u00FF\u00C1\u00C9\u00CD\u00D3\u00DA\u00D1\u00DC\u00E1\u00E9\u00ED\u00F3\u00FA\u00F1\u00FC.,;:!?()\-_]/g, '')
+    return limpio.trim()
+  }
+
   // Cargar datos desde localStorage al montar el componente
   useEffect(() => {
     const savedData = localStorage.getItem(STORAGE_KEY)
     if (savedData) {
       try {
         const parsedData = JSON.parse(savedData) as Partial<ChecklistGraficasData>
+        // Limpiar campos de texto si existen
+        if (parsedData.designadoGraficas) {
+          parsedData.designadoGraficas = limpiarTexto(parsedData.designadoGraficas)
+        }
+        if ((parsedData as any).observaciones) {
+          (parsedData as any).observaciones = limpiarTexto((parsedData as any).observaciones)
+        }
         setFormData(prev => ({ ...prev, ...parsedData }))
       } catch (error) {
         console.error('Error al cargar datos desde localStorage:', error)
@@ -118,7 +137,13 @@ const ChecklistGraficas = () => {
       const checked = (e.target as HTMLInputElement).checked
       setFormData(prev => ({ ...prev, [name]: checked }))
     } else {
-      setFormData(prev => ({ ...prev, [name]: value }))
+      // Limpiar texto para campos de texto (excepto fecha que es solo lectura)
+      if (name === 'designadoGraficas' || name === 'observaciones') {
+        const valorLimpio = limpiarTexto(value)
+        setFormData(prev => ({ ...prev, [name]: valorLimpio }))
+      } else {
+        setFormData(prev => ({ ...prev, [name]: value }))
+      }
     }
   }
 
