@@ -32,6 +32,17 @@ const MenuPrincipal = () => {
               <p>Checklist para gráficas de transmisión</p>
             </div>
           </button>
+
+          <button 
+            className="menu-button camaras"
+            onClick={() => navigate('/camaras')}
+          >
+            <div className="button-icon">📷</div>
+            <div className="button-content">
+              <h2>Checklist de Cámaras</h2>
+              <p>Checklist para operadores de cámaras</p>
+            </div>
+          </button>
         </div>
       </div>
     </div>
