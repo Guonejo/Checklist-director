@@ -207,7 +207,7 @@ const ChecklistGraficas = () => {
       <div className="checklist-card">
         <div className="checklist-header">
           <div className="header-logo-title">
-            <img src="/img/icon iuc.png" alt="Logo IUC" className="logo-iuc" />
+            <img src={`${import.meta.env.BASE_URL}img/icon%20iuc.png`} alt="Logo IUC" className="logo-iuc" />
             <div>
               <h1>CHECKLIST Gráficas Transmisión IUC Viña del Mar Etchevers</h1>
               <div className="header-info">
