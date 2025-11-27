@@ -1,7 +1,7 @@
 import jsPDF from 'jspdf'
 
 interface FormData {
-  [key: string]: string | boolean | undefined
+  [key: string]: any
 }
 
 interface ChecklistDirectorData extends FormData {
@@ -10,11 +10,13 @@ interface ChecklistDirectorData extends FormData {
   version: string
   observaciones: string
   actividad4_velocidadInternet: string
+  [key: string]: any
 }
 
 interface ChecklistGraficasData extends FormData {
   designadoGraficas: string
   fecha: string
+  [key: string]: any
 }
 
 const addPageIfNeeded = (doc: jsPDF, yPosition: number, pageHeight: number, margin: number = 40) => {
@@ -27,6 +29,7 @@ const addPageIfNeeded = (doc: jsPDF, yPosition: number, pageHeight: number, marg
 
 const dibujarTablaActividad = (
   doc: jsPDF,
+  ok: string,
   numero: string,
   actividad: string,
   x: number,
@@ -99,7 +102,7 @@ const dibujarTablaActividad = (
     doc.text(lines[0], actX, actY)
   } else {
     // Si tiene múltiples líneas, ajustar verticalmente
-  const lineHeight = 4
+    const lineHeight = 4
     const startY = actY - ((lines.length - 1) * lineHeight) / 2
     lines.forEach((line: string, idx: number) => {
       doc.text(line, actX, startY + idx * lineHeight)
@@ -116,7 +119,7 @@ export const generarPDFDirector = (data: ChecklistDirectorData) => {
   const pageHeight = doc.internal.pageSize.getHeight()
   let yPosition = 20
   const margin = 15
-  
+  const lineHeight = 7
   
   // Anchos de columnas - más espacio para OK
   const anchoOk = 18
@@ -261,12 +264,10 @@ export const generarPDFDirector = (data: ChecklistDirectorData) => {
   ]
 
   // Función para verificar si una actividad está completa
-  const actividadCompleta = (
-    act: { key: string; sub?: { key: string }[]; isText?: boolean; isComplex?: boolean }
-  ): boolean => {
+  const actividadCompleta = (act: any): boolean => {
     // Si es actividad 4 (velocidad internet), verificar si tiene valor
     if (act.key === 'actividad4_velocidadInternet') {
-      return Boolean(data.actividad4_velocidadInternet) && data.actividad4_velocidadInternet !== '' && data.actividad4_velocidadInternet !== 'N/A'
+      return data.actividad4_velocidadInternet && data.actividad4_velocidadInternet !== '' && data.actividad4_velocidadInternet !== 'N/A'
     }
     // Si es actividad 9 (cámaras), verificar si al menos una cámara está configurada
     if (act.key === 'actividad9_camaras') {
@@ -275,7 +276,7 @@ export const generarPDFDirector = (data: ChecklistDirectorData) => {
     if (act.isText || act.isComplex) return true
     if (data[act.key] === true) return true
     if (act.sub) {
-      return act.sub.some((sub) => data[sub.key] === true)
+      return act.sub.some((sub: any) => data[sub.key] === true)
     }
     return false
   }
@@ -285,6 +286,7 @@ export const generarPDFDirector = (data: ChecklistDirectorData) => {
     yPosition = addPageIfNeeded(doc, yPosition, pageHeight, 30)
     
     const completa = actividadCompleta(act)
+    const ok = completa ? '✓' : '☐'
     const numero = (idx + 1).toString()
     
     // Construir el texto de la actividad con formato correcto para campos con datos
@@ -300,7 +302,7 @@ export const generarPDFDirector = (data: ChecklistDirectorData) => {
       actividad = 'Cámara: Horiz. | Diafragma | Temp. Color | Expos. | Ganancia | Vel. Obtura.'
     }
     
-    const altura = dibujarTablaActividad(doc, numero, actividad, margin, yPosition, anchoOk, anchoNum, anchoAct, alturaFila, completa)
+    const altura = dibujarTablaActividad(doc, ok, numero, actividad, margin, yPosition, anchoOk, anchoNum, anchoAct, alturaFila, completa)
     let alturaTotal = Math.max(altura, alturaFila)
     yPosition += alturaTotal + 1
 
@@ -344,7 +346,7 @@ export const generarPDFDirector = (data: ChecklistDirectorData) => {
 
     // Sub-actividades - Formato mejorado con checkboxes en columna OK
     if (act.sub) {
-      act.sub.forEach((sub) => {
+      act.sub.forEach((sub: any) => {
         const subCompleta = data[sub.key] === true
         yPosition = addPageIfNeeded(doc, yPosition, pageHeight, 20)
         
@@ -532,7 +534,7 @@ export const generarPDFGraficas = (data: ChecklistGraficasData) => {
   const pageHeight = doc.internal.pageSize.getHeight()
   let yPosition = 20
   const margin = 15
-  
+  const lineHeight = 7
   
   // Anchos de columnas - más espacio para OK
   const anchoOk = 18
@@ -654,10 +656,11 @@ export const generarPDFGraficas = (data: ChecklistGraficasData) => {
     yPosition = addPageIfNeeded(doc, yPosition, pageHeight, 30)
     
     const completa = data[act.key] === true
+    const ok = completa ? '✓' : '☐'
     const numero = (idx + 1).toString()
-    const actividad = act.text.replace(/^\d+\.\s*/, '')
+    let actividad = act.text.replace(/^\d+\.\s*/, '')
     
-    const altura = dibujarTablaActividad(doc, numero, actividad, margin, yPosition, anchoOk, anchoNum, anchoAct, alturaFila, completa, idx)
+    const altura = dibujarTablaActividad(doc, ok, numero, actividad, margin, yPosition, anchoOk, anchoNum, anchoAct, alturaFila, completa, idx)
     yPosition += Math.max(altura, alturaFila) + 1
     
     // Marcar sección "Durante la transmisión" con estilo
