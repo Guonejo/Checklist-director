@@ -1,8 +1,10 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { generarPDFGraficas } from '../utils/pdfGenerator'
 import ModalValidacion from './ModalValidacion'
 import './Checklist.css'
+
+const STORAGE_KEY = 'checklist-graficas-data'
 
 interface ChecklistGraficasData {
   // Información general
@@ -89,6 +91,24 @@ const ChecklistGraficas = () => {
     actividad29_limpiarEstacion: false
   })
 
+  // Cargar datos desde localStorage al montar el componente
+  useEffect(() => {
+    const savedData = localStorage.getItem(STORAGE_KEY)
+    if (savedData) {
+      try {
+        const parsedData = JSON.parse(savedData)
+        setFormData(prev => ({ ...prev, ...parsedData }))
+      } catch (error) {
+        console.error('Error al cargar datos desde localStorage:', error)
+      }
+    }
+  }, [])
+
+  // Guardar datos en localStorage cada vez que cambien
+  useEffect(() => {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(formData))
+  }, [formData])
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value, type } = e.target
     if (type === 'checkbox') {
@@ -96,6 +116,14 @@ const ChecklistGraficas = () => {
       setFormData(prev => ({ ...prev, [name]: checked }))
     } else {
       setFormData(prev => ({ ...prev, [name]: value }))
+    }
+  }
+
+  // Función para limpiar los datos guardados
+  const limpiarDatos = () => {
+    if (window.confirm('¿Estás seguro de que deseas limpiar todos los datos guardados?')) {
+      localStorage.removeItem(STORAGE_KEY)
+      window.location.reload()
     }
   }
 
@@ -175,9 +203,11 @@ const ChecklistGraficas = () => {
     <div className="checklist-container">
       <div className="checklist-card">
         <div className="checklist-header">
-          <div>
-            <h1>CHECKLIST Gráficas Transmisión IUC Viña del Mar Etchevers</h1>
-            <div className="header-info">
+          <div className="header-logo-title">
+            <img src="/img/icon iuc.png" alt="Logo IUC" className="logo-iuc" />
+            <div>
+              <h1>CHECKLIST Gráficas Transmisión IUC Viña del Mar Etchevers</h1>
+              <div className="header-info">
               <div className="form-group inline">
                 <label htmlFor="designadoGraficas">Designado Gráficas:</label>
                 <input
@@ -202,6 +232,7 @@ const ChecklistGraficas = () => {
                   required
                 />
               </div>
+            </div>
             </div>
           </div>
           <button className="btn-volver" onClick={() => navigate('/')}>
@@ -538,6 +569,9 @@ const ChecklistGraficas = () => {
           <div className="form-actions">
             <button type="button" className="btn-imprimir" onClick={handleTerminarServicio}>
               ✅ Terminar Servicio
+            </button>
+            <button type="button" className="btn-limpiar" onClick={limpiarDatos} title="Limpiar datos guardados">
+              🗑️ Limpiar Datos
             </button>
           </div>
         </form>

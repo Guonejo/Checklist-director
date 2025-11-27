@@ -1,51 +1,116 @@
-# Checklist de Transmisiones
+# Checklist de Transmisiones IUC Viña del Mar
 
-Aplicación web para automatizar checklists de transmisiones con dos módulos principales:
-- **Checklist de Director**: Para verificar aspectos técnicos de la dirección
-- **Checklist de Gráficas**: Para verificar elementos gráficos de la transmisión
+Aplicación web para gestionar checklists de transmisiones en vivo para la Iglesia Unión Cristiana (IUC) Viña del Mar Etchevers.
 
-## Características
+## 🚀 Características
 
-- 🎯 Menú principal para seleccionar el tipo de checklist
-- 📝 Formularios interactivos con campos personalizables
-- 📄 Generación de PDFs con los datos completados
-- 🎨 Interfaz moderna y responsiva
-- ⚡ Construida con React + TypeScript + Vite
+- **Checklist de Director**: Checklist completo para el director de transmisión
+- **Checklist de Gráficas**: Checklist completo para el equipo de gráficas
+- **Validación de campos**: Alerta al usuario sobre campos incompletos antes de generar el PDF
+- **Generación de PDF**: Exporta el checklist completado como PDF profesional
+- **Diseño responsive**: Optimizado para dispositivos móviles y desktop
+- **Interfaz moderna**: Diseño atractivo con colores y efectos visuales
 
-## Instalación
+## 📋 Requisitos
 
-1. Instala las dependencias:
+- Node.js 18 o superior
+- npm o yarn
+
+## 🛠️ Instalación
+
+1. Clona el repositorio:
+```bash
+git clone https://github.com/tu-usuario/Checklist-director.git
+cd Checklist-director
+```
+
+2. Instala las dependencias:
 ```bash
 npm install
 ```
 
-2. Inicia el servidor de desarrollo:
+3. Ejecuta el servidor de desarrollo:
 ```bash
 npm run dev
 ```
 
-3. Abre tu navegador en `http://localhost:5173`
+4. Abre tu navegador en `http://localhost:5173`
 
-## Scripts Disponibles
+## 📦 Build para producción
 
-- `npm run dev` - Inicia el servidor de desarrollo
-- `npm run build` - Construye la aplicación para producción
-- `npm run preview` - Previsualiza la versión de producción
-- `npm run lint` - Ejecuta el linter
+```bash
+npm run build
+```
 
-## Uso
+Los archivos se generarán en la carpeta `dist/`.
 
-1. Selecciona el tipo de checklist desde el menú principal
-2. Completa todos los campos requeridos
-3. Haz clic en "Imprimir PDF" para generar el resumen en formato PDF
-4. El PDF se descargará automáticamente con los datos completados
+## 🚀 Despliegue en GitHub Pages
 
-## Tecnologías
+### Opción 1: Deploy automático con GitHub Actions (Recomendado)
 
-- React 18
-- TypeScript
-- Vite
-- React Router
-- jsPDF (para generación de PDFs)
-- CSS3
+El proyecto incluye un workflow de GitHub Actions que despliega automáticamente cuando haces push a la rama `main` o `master`.
 
+1. Asegúrate de que tu repositorio esté en GitHub
+2. Ve a **Settings** > **Pages** en tu repositorio
+3. Selecciona **Source**: `GitHub Actions`
+4. Haz push a la rama `main` o `master`
+5. El workflow se ejecutará automáticamente y desplegará tu sitio
+
+### Opción 2: Deploy manual con gh-pages
+
+1. Instala gh-pages globalmente:
+```bash
+npm install -g gh-pages
+```
+
+2. Ejecuta el deploy:
+```bash
+npm run deploy
+```
+
+**Nota**: Si tu repositorio tiene un nombre diferente a `Checklist-director`, actualiza el `base` en `vite.config.ts` con el nombre correcto de tu repositorio.
+
+### Configurar el base path
+
+Si tu repositorio tiene un nombre diferente, actualiza `vite.config.ts`:
+
+```typescript
+base: process.env.NODE_ENV === 'production' ? '/tu-nombre-repo/' : '/',
+```
+
+## 📁 Estructura del proyecto
+
+```
+Checklist-director/
+├── public/
+│   └── img/
+│       └── icon iuc.png      # Logo de la iglesia
+├── src/
+│   ├── components/
+│   │   ├── ChecklistDirector.tsx
+│   │   ├── ChecklistGraficas.tsx
+│   │   ├── MenuPrincipal.tsx
+│   │   ├── ModalValidacion.tsx
+│   │   └── *.css
+│   ├── utils/
+│   │   └── pdfGenerator.ts
+│   └── ...
+└── ...
+```
+
+## 🎨 Tecnologías utilizadas
+
+- **React 18** - Framework de UI
+- **TypeScript** - Tipado estático
+- **Vite** - Build tool y dev server
+- **React Router DOM** - Navegación
+- **jsPDF** - Generación de PDFs
+- **HTML2Canvas** - Captura de elementos HTML
+
+## 📝 Licencia
+
+Este proyecto es privado y está destinado para uso interno de la IUC Viña del Mar Etchevers.
+
+## 👥 Contribuidores
+
+- Desarrollado para IUC Viña del Mar Etchevers

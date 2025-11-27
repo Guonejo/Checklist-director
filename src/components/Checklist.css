@@ -1,7 +1,7 @@
 .checklist-container {
   min-height: 100vh;
   padding: 2rem;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #2ecc71 0%, #27ae60 50%, #16a085 100%);
   position: relative;
   overflow-x: hidden;
 }
@@ -14,8 +14,8 @@
   right: 0;
   bottom: 0;
   background: 
-    radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
-    radial-gradient(circle at 80% 80%, rgba(118, 75, 162, 0.15) 0%, transparent 50%);
+    radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.15) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(46, 204, 113, 0.2) 0%, transparent 50%);
   pointer-events: none;
 }
 
@@ -49,15 +49,30 @@
 .checklist-header {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
   margin-bottom: 2.5rem;
   padding-bottom: 1.5rem;
   border-bottom: 3px solid transparent;
   background: linear-gradient(white, white) padding-box,
-              linear-gradient(135deg, #667eea, #764ba2) border-box;
-  border-image: linear-gradient(135deg, #667eea, #764ba2) 1;
+              linear-gradient(135deg, #2ecc71, #27ae60) border-box;
+  border-image: linear-gradient(135deg, #2ecc71, #27ae60) 1;
   border-bottom-width: 3px;
   position: relative;
+}
+
+.header-logo-title {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.5rem;
+  flex: 1;
+}
+
+.logo-iuc {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+  flex-shrink: 0;
+  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.1));
 }
 
 .checklist-header::after {
@@ -67,13 +82,13 @@
   left: 0;
   width: 100px;
   height: 3px;
-  background: linear-gradient(135deg, #667eea, #764ba2);
+  background: linear-gradient(135deg, #2ecc71, #27ae60);
   border-radius: 2px;
 }
 
 .checklist-header h1 {
   font-size: 1.6rem;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -83,7 +98,36 @@
   letter-spacing: -0.3px;
 }
 
+@media (max-width: 768px) {
+  .header-logo-title {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .logo-iuc {
+    width: 60px;
+    height: 60px;
+  }
+}
+
 @media (max-width: 480px) {
+  .checklist-header {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .header-logo-title {
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+  }
+
+  .logo-iuc {
+    width: 50px;
+    height: 50px;
+  }
+
   .checklist-header h1 {
     font-size: 1rem;
     margin: 0 0 0.75rem 0;
@@ -111,10 +155,11 @@
 
 .header-input {
   padding: 0.5rem;
-  border: 2px solid #e0e0e0;
+  border: 2px solid #d1fae5;
   border-radius: 6px;
   font-size: 0.9rem;
   min-width: 150px;
+  background: white;
 }
 
 @media (max-width: 480px) {
@@ -127,8 +172,8 @@
 
 .header-input:focus {
   outline: none;
-  border-color: #667eea;
-  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+  border-color: #2ecc71;
+  box-shadow: 0 0 0 3px rgba(46, 204, 113, 0.15);
 }
 
 .btn-volver {
@@ -161,7 +206,7 @@
   background: #f9f9f9;
   padding: 1.5rem;
   border-radius: 10px;
-  border: 1px solid #e0e0e0;
+  border: 1px solid #d1fae5;
 }
 
 @media (max-width: 480px) {
@@ -176,7 +221,7 @@
   color: #333;
   margin-bottom: 1.5rem;
   padding-bottom: 0.5rem;
-  border-bottom: 2px solid #667eea;
+  border-bottom: 2px solid #2ecc71;
 }
 
 @media (max-width: 480px) {
@@ -211,7 +256,7 @@
 .form-group input[type="time"],
 .form-group textarea {
   padding: 0.875rem;
-  border: 2px solid #e8ecff;
+  border: 2px solid #d1fae5;
   border-radius: 10px;
   font-size: 1rem;
   transition: all 0.3s ease;
@@ -225,8 +270,8 @@
 .form-group input[type="time"]:focus,
 .form-group textarea:focus {
   outline: none;
-  border-color: #667eea;
-  box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.15), 0 4px 10px rgba(102, 126, 234, 0.2);
+  border-color: #2ecc71;
+  box-shadow: 0 0 0 4px rgba(46, 204, 113, 0.15), 0 4px 10px rgba(46, 204, 113, 0.2);
   transform: translateY(-2px);
 }
 
@@ -248,23 +293,23 @@
   padding: 1rem;
   background: white;
   border-radius: 10px;
-  border: 2px solid #e8ecff;
+  border: 2px solid #d1fae5;
   transition: all 0.3s ease;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
 }
 
 .checkbox-group:hover {
-  border-color: #667eea;
-  background: linear-gradient(135deg, #f8f9ff 0%, #f0f3ff 100%);
+  border-color: #2ecc71;
+  background: linear-gradient(135deg, #f0fdf4 0%, #ecfdf5 100%);
   transform: translateX(3px);
-  box-shadow: 0 4px 10px rgba(102, 126, 234, 0.15);
+  box-shadow: 0 4px 10px rgba(46, 204, 113, 0.2);
 }
 
 .checkbox-group input[type="checkbox"] {
   width: 22px;
   height: 22px;
   cursor: pointer;
-  accent-color: #667eea;
+  accent-color: #2ecc71;
   transition: transform 0.2s ease;
 }
 
@@ -286,7 +331,7 @@
 }
 
 .btn-imprimir {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
   color: white;
   border: none;
   border-radius: 12px;
@@ -295,7 +340,7 @@
   font-weight: 700;
   cursor: pointer;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4), 0 2px 8px rgba(118, 75, 162, 0.3);
+  box-shadow: 0 6px 20px rgba(46, 204, 113, 0.4), 0 2px 8px rgba(39, 174, 96, 0.3);
   width: 100%;
   max-width: 320px;
   position: relative;
@@ -323,7 +368,7 @@
 
 .btn-imprimir:hover {
   transform: translateY(-3px) scale(1.02);
-  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.5), 0 4px 12px rgba(118, 75, 162, 0.4);
+  box-shadow: 0 8px 25px rgba(46, 204, 113, 0.5), 0 4px 12px rgba(39, 174, 96, 0.4);
 }
 
 .btn-imprimir:active {
@@ -347,6 +392,42 @@
   transform: translateY(0);
 }
 
+.btn-limpiar {
+  background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 0.8rem 1.5rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(231, 76, 60, 0.3);
+  margin-top: 1rem;
+  width: 100%;
+  max-width: 320px;
+}
+
+.btn-limpiar:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(231, 76, 60, 0.4);
+  background: linear-gradient(135deg, #c0392b 0%, #a93226 100%);
+}
+
+.btn-limpiar:active {
+  transform: translateY(0);
+}
+
+.form-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 2px solid #d1fae5;
+}
+
 /* Actividad Items */
 .actividad-item {
   display: flex;
@@ -355,14 +436,14 @@
   padding: 1.25rem;
   background: white;
   border-radius: 12px;
-  border-left: 5px solid #667eea;
-  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.1);
+  border-left: 5px solid #2ecc71;
+  box-shadow: 0 2px 8px rgba(46, 204, 113, 0.15);
   transition: all 0.3s ease;
   position: relative;
 }
 
 .actividad-item:hover {
-  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.2);
+  box-shadow: 0 4px 15px rgba(46, 204, 113, 0.25);
   transform: translateX(5px);
   border-left-width: 6px;
 }
@@ -374,7 +455,7 @@
   top: 0;
   bottom: 0;
   width: 5px;
-  background: linear-gradient(135deg, #667eea, #764ba2);
+  background: linear-gradient(135deg, #2ecc71, #27ae60);
   border-radius: 0 3px 3px 0;
   opacity: 0;
   transition: opacity 0.3s ease;
@@ -403,16 +484,16 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #667eea, #764ba2);
+  background: linear-gradient(135deg, #2ecc71, #27ae60);
   border-radius: 12px;
   color: white;
-  box-shadow: 0 3px 10px rgba(102, 126, 234, 0.3);
+  box-shadow: 0 3px 10px rgba(46, 204, 113, 0.4);
   transition: all 0.3s ease;
 }
 
 .actividad-item:hover .actividad-number {
   transform: scale(1.1);
-  box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+  box-shadow: 0 5px 15px rgba(46, 204, 113, 0.5);
 }
 
 @media (max-width: 480px) {
@@ -444,19 +525,19 @@
   margin-left: 1.5rem;
   margin-top: 0.75rem;
   padding-left: 1rem;
-  border-left: 3px solid #e8ecff;
+  border-left: 3px solid #d1fae5;
 }
 
 .sub-actividades .checkbox-group {
   padding: 0.75rem;
   margin: 0;
-  background: #f8f9ff;
-  border-color: #e0e4ff;
+  background: #f0fdf4;
+  border-color: #bbf7d0;
 }
 
 .text-input-small {
   padding: 0.65rem;
-  border: 2px solid #e8ecff;
+  border: 2px solid #d1fae5;
   border-radius: 8px;
   font-size: 0.95rem;
   max-width: 200px;
@@ -468,8 +549,8 @@
 
 .text-input-small:focus {
   outline: none;
-  border-color: #667eea;
-  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.15), 0 2px 8px rgba(102, 126, 234, 0.2);
+  border-color: #2ecc71;
+  box-shadow: 0 0 0 3px rgba(46, 204, 113, 0.15), 0 2px 8px rgba(46, 204, 113, 0.2);
   transform: translateY(-2px);
 }
 
@@ -480,29 +561,29 @@
   gap: 1.25rem;
   margin-top: 1rem;
   padding: 1.5rem;
-  background: linear-gradient(135deg, #f8f9ff 0%, #f0f3ff 100%);
+  background: linear-gradient(135deg, #f0fdf4 0%, #ecfdf5 100%);
   border-radius: 12px;
-  border: 2px solid #e8ecff;
-  box-shadow: inset 0 2px 5px rgba(102, 126, 234, 0.1);
+  border: 2px solid #d1fae5;
+  box-shadow: inset 0 2px 5px rgba(46, 204, 113, 0.1);
 }
 
 .camara-group {
   background: white;
   padding: 1.25rem;
   border-radius: 10px;
-  border: 2px solid #e8ecff;
-  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.1);
+  border: 2px solid #d1fae5;
+  box-shadow: 0 2px 8px rgba(46, 204, 113, 0.15);
   transition: all 0.3s ease;
 }
 
 .camara-group:hover {
-  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2);
+  box-shadow: 0 4px 12px rgba(46, 204, 113, 0.25);
   transform: translateY(-2px);
 }
 
 .camara-group h4 {
   margin: 0 0 1rem 0;
-  background: linear-gradient(135deg, #667eea, #764ba2);
+  background: linear-gradient(135deg, #2ecc71, #27ae60);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -528,7 +609,7 @@
 .tiny-input {
   width: 65px;
   padding: 0.5rem;
-  border: 2px solid #e8ecff;
+  border: 2px solid #d1fae5;
   border-radius: 6px;
   font-size: 0.9rem;
   text-align: center;
@@ -539,15 +620,15 @@
 
 .tiny-input:focus {
   outline: none;
-  border-color: #667eea;
-  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.15), 0 2px 6px rgba(102, 126, 234, 0.2);
+  border-color: #2ecc71;
+  box-shadow: 0 0 0 3px rgba(46, 204, 113, 0.15), 0 2px 6px rgba(46, 204, 113, 0.2);
   transform: scale(1.05);
 }
 
 .observaciones-textarea {
   width: 100%;
   padding: 1.25rem;
-  border: 2px solid #e8ecff;
+  border: 2px solid #d1fae5;
   border-radius: 12px;
   font-size: 1rem;
   font-family: inherit;
@@ -561,8 +642,8 @@
 
 .observaciones-textarea:focus {
   outline: none;
-  border-color: #667eea;
-  box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.15), 0 4px 12px rgba(102, 126, 234, 0.2);
+  border-color: #2ecc71;
+  box-shadow: 0 0 0 4px rgba(46, 204, 113, 0.15), 0 4px 12px rgba(46, 204, 113, 0.2);
   transform: translateY(-2px);
 }
 
@@ -683,6 +764,18 @@
 
   .checklist-header {
     gap: 0.75rem;
+    flex-direction: column;
+  }
+
+  .header-logo-title {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .logo-iuc {
+    width: 60px;
+    height: 60px;
   }
 
   .checklist-header h1 {
