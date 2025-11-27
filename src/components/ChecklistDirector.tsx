@@ -158,12 +158,28 @@ const ChecklistDirector = () => {
     observaciones: ''
   })
 
+  // Función para limpiar caracteres extraños del texto
+  const limpiarTexto = (texto: string): string => {
+    if (!texto || typeof texto !== 'string') return texto
+    // Eliminar BOM y caracteres de control invisibles
+    let limpio = texto.replace(/[\uFEFF\u200B-\u200D\u2060]/g, '')
+    // Eliminar caracteres problemáticos específicos como Ø=ÜÝ
+    limpio = limpio.replace(/[Ø=ÜÝ\u00D8\u00DC\u00DD\u00D6\u00C4\u00C5\u00C6\u00E6\u00C7\u00E7]/g, '')
+    // Eliminar cualquier carácter que no sea letra, número, espacio, puntuación o caracteres latinos
+    limpio = limpio.replace(/[^\w\s\u00C0-\u024F\u1E00-\u1EFF\u00A0-\u00FF\u00C1\u00C9\u00CD\u00D3\u00DA\u00D1\u00DC\u00E1\u00E9\u00ED\u00F3\u00FA\u00F1\u00FC.,;:!?()\-_]/g, '')
+    return limpio.trim()
+  }
+
   // Cargar datos desde localStorage al montar el componente
   useEffect(() => {
     const savedData = localStorage.getItem(STORAGE_KEY)
     if (savedData) {
       try {
         const parsedData = JSON.parse(savedData) as Partial<ChecklistDirectorData>
+        // Limpiar observaciones si existen
+        if (parsedData.observaciones) {
+          parsedData.observaciones = limpiarTexto(parsedData.observaciones)
+        }
         setFormData(prev => ({ ...prev, ...parsedData }))
       } catch (error) {
         console.error('Error al cargar datos desde localStorage:', error)
@@ -187,6 +203,10 @@ const ChecklistDirector = () => {
         // Solo permitir números y máximo 2 caracteres
         const numericValue = value.replace(/[^0-9]/g, '').slice(0, 2)
         setFormData(prev => ({ ...prev, [name]: numericValue }))
+      } else if (name === 'observaciones') {
+        // Limpiar texto para el campo de observaciones
+        const valorLimpio = limpiarTexto(value)
+        setFormData(prev => ({ ...prev, [name]: valorLimpio }))
       } else {
         setFormData(prev => ({ ...prev, [name]: value }))
       }

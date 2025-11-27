@@ -509,16 +509,16 @@ export const generarPDFDirector = (data: ChecklistDirectorData) => {
     doc.setFontSize(9)
     doc.setFont('helvetica', 'normal')
     doc.setTextColor(51, 51, 51)
-    // Limpiar caracteres raros al inicio del texto (BOM, caracteres de control y caracteres especiales problemáticos)
-    let observacionesLimpio = data.observaciones.trim()
-    // Eliminar BOM y caracteres de control invisibles
-    observacionesLimpio = observacionesLimpio.replace(/^[\uFEFF\u200B-\u200D\u2060]+/, '')
-    // Eliminar caracteres problemáticos específicos como Ø=ÜÝ y otros caracteres especiales al inicio
-    observacionesLimpio = observacionesLimpio.replace(/^[Ø=ÜÝ\u00D8\u00DC\u00DD\u00D6\u00C4\u00C5\u00C6\u00E6\u00C7\u00E7]+/, '')
-    // Eliminar cualquier secuencia de caracteres no alfanuméricos al inicio (excepto espacios después de letras)
-    observacionesLimpio = observacionesLimpio.replace(/^[^\p{L}\p{N}\s]+/u, '')
-    // Limpiar espacios múltiples al inicio
-    observacionesLimpio = observacionesLimpio.replace(/^\s+/, '')
+    // Limpiar caracteres raros del texto de observaciones
+    let observacionesLimpio = data.observaciones || ''
+    // Eliminar BOM y caracteres de control invisibles en todo el texto
+    observacionesLimpio = observacionesLimpio.replace(/[\uFEFF\u200B-\u200D\u2060]/g, '')
+    // Eliminar caracteres problemáticos específicos como Ø=ÜÝ en todo el texto
+    observacionesLimpio = observacionesLimpio.replace(/[Ø=ÜÝ\u00D8\u00DC\u00DD\u00D6\u00C4\u00C5\u00C6\u00E6\u00C7\u00E7]/g, '')
+    // Eliminar cualquier carácter que no sea letra, número, espacio, puntuación o caracteres latinos
+    observacionesLimpio = observacionesLimpio.replace(/[^\w\s\u00C0-\u024F\u1E00-\u1EFF\u00A0-\u00FF\u00C1\u00C9\u00CD\u00D3\u00DA\u00D1\u00DC\u00E1\u00E9\u00ED\u00F3\u00FA\u00F1\u00FC.,;:!?()\-_]/g, '')
+    // Limpiar espacios múltiples
+    observacionesLimpio = observacionesLimpio.replace(/\s+/g, ' ').trim()
     const observacionesLines = doc.splitTextToSize(observacionesLimpio, pageWidth - 2 * margin - 6)
     observacionesLines.forEach((line: string) => {
       yPosition = addPageIfNeeded(doc, yPosition, pageHeight)
