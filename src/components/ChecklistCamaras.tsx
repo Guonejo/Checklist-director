@@ -512,55 +512,55 @@ const ChecklistCamaras = () => {
                     <div className="camara-group">
                       <div className="config-row">
                         <div className="config-col">1 (G70)</div>
-                        <div className="config-col">
+                        <div className="config-col" data-label="Diafragma">
                           <input type="text" name="actividad8_camara1_diafragma" value={formData.actividad8_camara1_diafragma} onChange={handleChange} placeholder="f/" className="tiny-input" />
                         </div>
-                        <div className="config-col">
+                        <div className="config-col" data-label="Temp. Color">
                           <input type="text" name="actividad8_camara1_tempColor" value={formData.actividad8_camara1_tempColor} onChange={handleChange} placeholder="kelvin" className="tiny-input" />
                         </div>
-                        <div className="config-col">
+                        <div className="config-col" data-label="Expos.">
                           <input type="text" name="actividad8_camara1_exposicion" value={formData.actividad8_camara1_exposicion} onChange={handleChange} placeholder="expos." className="tiny-input" />
                         </div>
-                        <div className="config-col">
+                        <div className="config-col" data-label="Ganancia">
                           <input type="text" name="actividad8_camara1_ganancia" value={formData.actividad8_camara1_ganancia} onChange={handleChange} placeholder="(db)" className="tiny-input" />
                         </div>
-                        <div className="config-col">
+                        <div className="config-col" data-label="Vel. Obturador">
                           <input type="text" name="actividad8_camara1_velObturador" value={formData.actividad8_camara1_velObturador} onChange={handleChange} placeholder="/" className="tiny-input" />
                         </div>
                       </div>
                       <div className="config-row">
                         <div className="config-col">2 (G50)</div>
-                        <div className="config-col">
+                        <div className="config-col" data-label="Diafragma">
                           <input type="text" name="actividad8_camara2_diafragma" value={formData.actividad8_camara2_diafragma} onChange={handleChange} placeholder="f/" className="tiny-input" />
                         </div>
-                        <div className="config-col">
+                        <div className="config-col" data-label="Temp. Color">
                           <input type="text" name="actividad8_camara2_tempColor" value={formData.actividad8_camara2_tempColor} onChange={handleChange} placeholder="kelvin" className="tiny-input" />
                         </div>
-                        <div className="config-col">
+                        <div className="config-col" data-label="Expos.">
                           <input type="text" name="actividad8_camara2_exposicion" value={formData.actividad8_camara2_exposicion} onChange={handleChange} placeholder="expos." className="tiny-input" />
                         </div>
-                        <div className="config-col">
+                        <div className="config-col" data-label="Ganancia">
                           <input type="text" name="actividad8_camara2_ganancia" value={formData.actividad8_camara2_ganancia} onChange={handleChange} placeholder="(db)" className="tiny-input" />
                         </div>
-                        <div className="config-col">
+                        <div className="config-col" data-label="Vel. Obturador">
                           <input type="text" name="actividad8_camara2_velObturador" value={formData.actividad8_camara2_velObturador} onChange={handleChange} placeholder="/" className="tiny-input" />
                         </div>
                       </div>
                       <div className="config-row">
                         <div className="config-col">3 (G20)</div>
-                        <div className="config-col">
+                        <div className="config-col" data-label="Diafragma">
                           <input type="text" name="actividad8_camara3_diafragma" value={formData.actividad8_camara3_diafragma} onChange={handleChange} placeholder="f/" className="tiny-input" />
                         </div>
-                        <div className="config-col">
+                        <div className="config-col" data-label="Temp. Color">
                           <input type="text" name="actividad8_camara3_tempColor" value={formData.actividad8_camara3_tempColor} onChange={handleChange} placeholder="kelvin" className="tiny-input" />
                         </div>
-                        <div className="config-col">
+                        <div className="config-col" data-label="Expos.">
                           <input type="text" name="actividad8_camara3_exposicion" value={formData.actividad8_camara3_exposicion} onChange={handleChange} placeholder="expos." className="tiny-input" />
                         </div>
-                        <div className="config-col">
+                        <div className="config-col" data-label="Ganancia">
                           <input type="text" name="actividad8_camara3_ganancia" value={formData.actividad8_camara3_ganancia} onChange={handleChange} placeholder="(db)" className="tiny-input" />
                         </div>
-                        <div className="config-col">
+                        <div className="config-col" data-label="Vel. Obturador">
                           <input type="text" name="actividad8_camara3_velObturador" value={formData.actividad8_camara3_velObturador} onChange={handleChange} placeholder="/" className="tiny-input" />
                         </div>
                       </div>

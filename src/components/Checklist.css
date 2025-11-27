@@ -807,22 +807,124 @@
   }
 
   @media (max-width: 768px) {
-    .camara-config-header,
+    .camara-config-table {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .camara-config-header {
+      grid-template-columns: 80px repeat(5, 1fr);
+      min-width: 600px;
+      font-size: 0.8rem;
+      padding: 0.5rem;
+    }
+
     .config-row {
-      grid-template-columns: 1fr;
-      gap: 0.5rem;
+      grid-template-columns: 80px repeat(5, 1fr);
+      min-width: 600px;
+      padding: 0.5rem;
     }
 
     .config-col {
+      font-size: 0.85rem;
+      padding: 0.25rem;
+    }
+
+    .config-col .tiny-input {
+      font-size: 0.8rem;
+      padding: 0.3rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .camara-config-section {
+      margin-top: 0.75rem;
+    }
+
+    .camara-config-section h4 {
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .camara-config-table {
+      border-width: 1px;
+      border-radius: 8px;
+    }
+
+    .camara-config-header {
+      grid-template-columns: 1fr;
+      min-width: 100%;
+      gap: 0.25rem;
+      padding: 0.75rem 0.5rem;
+      font-size: 0.75rem;
+    }
+
+    .camara-config-header .config-col {
+      display: none;
+    }
+
+    .camara-config-header .config-col:first-child {
+      display: flex;
+      font-size: 0.9rem;
+      padding: 0.5rem;
+      border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+      margin-bottom: 0.5rem;
+    }
+
+    .config-row {
+      grid-template-columns: 1fr;
+      min-width: 100%;
+      gap: 0.5rem;
+      padding: 0.75rem;
+      border-bottom: 2px solid #e0e0e0;
+    }
+
+    .config-row:last-child {
+      border-bottom: none;
+    }
+
+    .config-col {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
       justify-content: flex-start;
       padding: 0.5rem;
+      gap: 0.25rem;
+      border-bottom: 1px solid #f0f0f0;
+    }
+
+    .config-col:last-child {
+      border-bottom: none;
     }
 
     .config-col:first-child {
       font-weight: 700;
-      border-bottom: 1px solid #e0e0e0;
+      font-size: 1rem;
+      color: #2ecc71;
+      border-bottom: 2px solid #2ecc71;
       padding-bottom: 0.75rem;
       margin-bottom: 0.5rem;
+      width: 100%;
+    }
+
+    .config-col::before {
+      content: attr(data-label);
+      font-weight: 600;
+      font-size: 0.75rem;
+      color: #666;
+      margin-bottom: 0.25rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .config-col:first-child::before {
+      display: none;
+    }
+
+    .config-col .tiny-input {
+      width: 100%;
+      font-size: 0.9rem;
+      padding: 0.5rem;
     }
   }
 
