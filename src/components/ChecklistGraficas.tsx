@@ -96,7 +96,7 @@ const ChecklistGraficas = () => {
     const savedData = localStorage.getItem(STORAGE_KEY)
     if (savedData) {
       try {
-        const parsedData = JSON.parse(savedData)
+        const parsedData = JSON.parse(savedData) as Partial<ChecklistGraficasData>
         setFormData(prev => ({ ...prev, ...parsedData }))
       } catch (error) {
         console.error('Error al cargar datos desde localStorage:', error)
@@ -186,13 +186,13 @@ const ChecklistGraficas = () => {
       setActividadesFaltantes(faltantes)
       setMostrarModal(true)
     } else {
-      generarPDFGraficas(formData)
+      generarPDFGraficas(formData as ChecklistGraficasData)
     }
   }
 
   const handleConfirmarGenerar = () => {
     setMostrarModal(false)
-    generarPDFGraficas(formData)
+    generarPDFGraficas(formData as ChecklistGraficasData)
   }
 
   const handleCancelarGenerar = () => {

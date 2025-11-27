@@ -160,7 +160,7 @@ const ChecklistDirector = () => {
     const savedData = localStorage.getItem(STORAGE_KEY)
     if (savedData) {
       try {
-        const parsedData = JSON.parse(savedData)
+        const parsedData = JSON.parse(savedData) as Partial<ChecklistDirectorData>
         setFormData(prev => ({ ...prev, ...parsedData }))
       } catch (error) {
         console.error('Error al cargar datos desde localStorage:', error)
@@ -268,13 +268,13 @@ const ChecklistDirector = () => {
       setActividadesFaltantes(faltantes)
       setMostrarModal(true)
     } else {
-      generarPDFDirector(formData)
+      generarPDFDirector(formData as ChecklistDirectorData)
     }
   }
 
   const handleConfirmarGenerar = () => {
     setMostrarModal(false)
-    generarPDFDirector(formData)
+    generarPDFDirector(formData as ChecklistDirectorData)
   }
 
   const handleCancelarGenerar = () => {
