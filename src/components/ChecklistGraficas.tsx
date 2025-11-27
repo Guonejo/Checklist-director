@@ -53,6 +53,9 @@ interface ChecklistGraficasData {
   // Para finalizar (28-29)
   actividad28_cerrarProgramas: boolean
   actividad29_limpiarEstacion: boolean
+
+  // Index signature para compatibilidad con pdfGenerator
+  [key: string]: any
 }
 
 const ChecklistGraficas = () => {
@@ -186,7 +189,7 @@ const ChecklistGraficas = () => {
       setActividadesFaltantes(faltantes)
       setMostrarModal(true)
     } else {
-      generarPDFGraficas(formData as ChecklistGraficasData)
+      generarPDFGraficas(formData)
     }
   }
 

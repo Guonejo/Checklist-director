@@ -83,6 +83,9 @@ interface ChecklistDirectorData {
 
   // Observaciones
   observaciones: string
+
+  // Index signature para compatibilidad con pdfGenerator
+  [key: string]: any
 }
 
 const ChecklistDirector = () => {
@@ -268,7 +271,7 @@ const ChecklistDirector = () => {
       setActividadesFaltantes(faltantes)
       setMostrarModal(true)
     } else {
-      generarPDFDirector(formData as ChecklistDirectorData)
+      generarPDFDirector(formData)
     }
   }
 
