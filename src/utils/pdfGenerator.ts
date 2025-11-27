@@ -59,20 +59,22 @@ const dibujarTablaActividad = (
   doc.setLineWidth(0.3)
   doc.line(x, y + altura, x + anchoOk + anchoNum + anchoAct, y + altura)
   
-  // Escribir OK (checkbox) - Usando emoji ✅
+  // Escribir OK (checkbox) - Check verde para completadas, X roja grande para no completadas
   const okX = x + anchoOk / 2
   const okY = y + altura / 2
   
-  doc.setFontSize(12)
   if (completa) {
-    doc.setFont('helvetica', 'normal')
-    // Usar emoji ✅ directamente
-    doc.text('✅', okX - doc.getTextWidth('✅') / 2, okY + 2)
+    // Check verde grande
+    doc.setFontSize(14)
+    doc.setFont('helvetica', 'bold')
+    doc.setTextColor(46, 125, 50) // Verde
+    doc.text('✓', okX - doc.getTextWidth('✓') / 2, okY + 2.5)
   } else {
-    doc.setFont('helvetica', 'normal')
-    doc.setTextColor(180, 180, 180)
-    // Usar cuadro vacío
-    doc.text('⬜', okX - doc.getTextWidth('⬜') / 2, okY + 2)
+    // X roja grande
+    doc.setFontSize(16)
+    doc.setFont('helvetica', 'bold')
+    doc.setTextColor(231, 76, 60) // Rojo
+    doc.text('✗', okX - doc.getTextWidth('✗') / 2, okY + 2.5)
   }
   
   // Escribir número con estilo mejorado
@@ -158,7 +160,7 @@ export const generarPDFDirector = (data: ChecklistDirectorData) => {
   doc.text(`DIRECTOR:`, margin + 3, yPosition + 2)
   doc.setFont('helvetica', 'normal')
   doc.setTextColor(51, 51, 51)
-  doc.text(`${data.director || 'N/A'}`, margin + 35, yPosition + 2)
+  doc.text(`${data.director || 'NO ESPECIFICADO'}`, margin + 35, yPosition + 2)
   
   doc.setFont('helvetica', 'bold')
   doc.setTextColor(102, 126, 234)
@@ -166,7 +168,9 @@ export const generarPDFDirector = (data: ChecklistDirectorData) => {
   doc.text(`FECHA:`, margin + 73, yPosition + 2)
   doc.setFont('helvetica', 'normal')
   doc.setTextColor(51, 51, 51)
-  doc.text(`${data.fecha || 'N/A'}`, margin + 93, yPosition + 2)
+  // Usar la fecha del sistema si no hay fecha en los datos
+  const fechaMostrar = data.fecha || new Date().toISOString().split('T')[0]
+  doc.text(fechaMostrar, margin + 93, yPosition + 2)
   
   // Versión con estilo
   doc.setFont('helvetica', 'bold')
@@ -212,7 +216,9 @@ export const generarPDFDirector = (data: ChecklistDirectorData) => {
   const actividades = [
     { key: 'actividad1_ups', text: 'Encender UPS bajo mesa de equipos y conectar zapatillas en línea BATTERY' },
     { key: 'actividad2_atem', text: 'Conectar puertos en ATEM MiniPro:', sub: [
-      { key: 'actividad2_atem_camara1', text: 'Cámaras HDMI (1, 2, 3)' },
+      { key: 'actividad2_atem_camara1', text: 'Cámara HDMI 1' },
+      { key: 'actividad2_atem_camara2', text: 'Cámara HDMI 2' },
+      { key: 'actividad2_atem_camara3', text: 'Cámara HDMI 3' },
       { key: 'actividad2_atem_pcGraficas', text: 'PC Gráficas (4)' },
       { key: 'actividad2_atem_monitorLED', text: 'Monitor LED (HDMI OUT)' },
       { key: 'actividad2_atem_audio', text: 'Audio Plug 3,5mm (MIC1)' },
@@ -355,17 +361,21 @@ export const generarPDFDirector = (data: ChecklistDirectorData) => {
         doc.setLineWidth(0.1)
         doc.line(margin, yPosition, margin + anchoOk + anchoNum + anchoAct, yPosition)
         
-        // Checkbox para sub-actividad en columna OK - usando emoji
+        // Checkbox para sub-actividad en columna OK - Check verde o X roja
         const subOkX = margin + anchoOk / 2
         const subOkY = yPosition + 3
-        doc.setFontSize(10)
-        doc.setFont('helvetica', 'normal')
         if (subCompleta) {
-          doc.setTextColor(0, 0, 0)
-          doc.text('✅', subOkX - doc.getTextWidth('✅') / 2, subOkY + 1.5)
+          // Check verde grande
+          doc.setFontSize(12)
+          doc.setFont('helvetica', 'bold')
+          doc.setTextColor(46, 125, 50) // Verde
+          doc.text('✓', subOkX - doc.getTextWidth('✓') / 2, subOkY + 2)
         } else {
-          doc.setTextColor(180, 180, 180)
-          doc.text('⬜', subOkX - doc.getTextWidth('⬜') / 2, subOkY + 1.5)
+          // X roja grande
+          doc.setFontSize(14)
+          doc.setFont('helvetica', 'bold')
+          doc.setTextColor(231, 76, 60) // Rojo
+          doc.text('✗', subOkX - doc.getTextWidth('✗') / 2, subOkY + 2)
         }
         
         // Texto de la sub-actividad con colores mejorados
@@ -410,13 +420,13 @@ export const generarPDFDirector = (data: ChecklistDirectorData) => {
           doc.setLineWidth(0.1)
           doc.line(margin, yPosition, margin + anchoOk + anchoNum + anchoAct, yPosition)
           
-          // Checkbox en columna OK - usando emoji
+          // Checkbox en columna OK - Check verde grande (las cámaras siempre están completas si tienen horizonte)
           const subOkX = margin + anchoOk / 2
           const subOkY = yPosition + 3
-          doc.setFontSize(10)
-          doc.setFont('helvetica', 'normal')
-          doc.setTextColor(0, 0, 0)
-          doc.text('✅', subOkX - doc.getTextWidth('✅') / 2, subOkY + 1.5)
+          doc.setFontSize(12)
+          doc.setFont('helvetica', 'bold')
+          doc.setTextColor(46, 125, 50) // Verde
+          doc.text('✓', subOkX - doc.getTextWidth('✓') / 2, subOkY + 2)
           
           // Formato mejorado: Cámara 1 (G70): Horiz: 12 | f/12 | 32K | Exp:4324 | Gan:5435 | Obt:23523
           doc.setFontSize(8)

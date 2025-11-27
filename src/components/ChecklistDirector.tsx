@@ -93,7 +93,7 @@ const ChecklistDirector = () => {
   const [formData, setFormData] = useState<ChecklistDirectorData>({
     director: '',
     fecha: new Date().toISOString().split('T')[0],
-    version: 'v5.13',
+    version: '5.13',
     actividad1_ups: false,
     actividad2_atem_camara1: false,
     actividad2_atem_camara2: false,
@@ -207,12 +207,17 @@ const ChecklistDirector = () => {
   const validarActividades = (): string[] => {
     const faltantes: string[] = []
 
+    // Validar director (obligatorio)
+    if (!formData.director || formData.director.trim() === '') {
+      faltantes.push('DIRECTOR: Campo obligatorio')
+    }
+
     // Actividad 1
     if (!formData.actividad1_ups) faltantes.push('1. Encender UPS bajo mesa de equipos')
 
     // Actividad 2 - Verificar si al menos una sub-actividad está marcada
-    const actividad2Completa = formData.actividad2_atem_camara1 || formData.actividad2_atem_pcGraficas || 
-                               formData.actividad2_atem_monitorLED || formData.actividad2_atem_audio ||
+    const actividad2Completa = formData.actividad2_atem_camara1 || formData.actividad2_atem_camara2 || formData.actividad2_atem_camara3 ||
+                               formData.actividad2_atem_pcGraficas || formData.actividad2_atem_monitorLED || formData.actividad2_atem_audio ||
                                formData.actividad2_atem_rj45 || formData.actividad2_atem_usb || formData.actividad2_atem_power
     if (!actividad2Completa) faltantes.push('2. Conectar puertos en ATEM MiniPro')
 
@@ -303,7 +308,7 @@ const ChecklistDirector = () => {
               <h1>CHECKLIST Director Transmisión IUC Viña del Mar Etchevers</h1>
               <div className="header-info">
               <div className="form-group inline">
-                <label htmlFor="director">DIRECTOR:</label>
+                <label htmlFor="director">DIRECTOR: <span style={{color: 'red'}}>*</span></label>
                 <input
                   type="text"
                   id="director"
@@ -312,6 +317,7 @@ const ChecklistDirector = () => {
                   onChange={handleChange}
                   className="header-input"
                   required
+                  placeholder="Nombre del director"
                 />
               </div>
               <div className="form-group inline">
@@ -324,6 +330,7 @@ const ChecklistDirector = () => {
                   onChange={handleChange}
                   className="header-input"
                   required
+                  readOnly
                 />
               </div>
               <div className="form-group inline">
@@ -364,7 +371,15 @@ const ChecklistDirector = () => {
                 <div className="sub-actividades">
                   <label className="checkbox-group">
                     <input type="checkbox" name="actividad2_atem_camara1" checked={formData.actividad2_atem_camara1} onChange={handleChange} />
-                    <span>Cámaras HDMI (1, 2, 3)</span>
+                    <span>Cámara HDMI 1</span>
+                  </label>
+                  <label className="checkbox-group">
+                    <input type="checkbox" name="actividad2_atem_camara2" checked={formData.actividad2_atem_camara2} onChange={handleChange} />
+                    <span>Cámara HDMI 2</span>
+                  </label>
+                  <label className="checkbox-group">
+                    <input type="checkbox" name="actividad2_atem_camara3" checked={formData.actividad2_atem_camara3} onChange={handleChange} />
+                    <span>Cámara HDMI 3</span>
                   </label>
                   <label className="checkbox-group">
                     <input type="checkbox" name="actividad2_atem_pcGraficas" checked={formData.actividad2_atem_pcGraficas} onChange={handleChange} />
