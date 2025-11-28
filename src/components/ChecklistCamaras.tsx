@@ -167,10 +167,15 @@ const ChecklistCamaras = () => {
 
   // Cargar datos desde localStorage al montar el componente
   useEffect(() => {
+    const fechaActual = new Date().toISOString().split('T')[0]
     const savedData = localStorage.getItem(STORAGE_KEY)
     if (savedData) {
       try {
         const parsedData = JSON.parse(savedData) as Partial<ChecklistCamarasData>
+        // Actualizar la fecha si es diferente de la fecha actual
+        if (parsedData.fecha && parsedData.fecha !== fechaActual) {
+          parsedData.fecha = fechaActual
+        }
         if (parsedData.observaciones) {
           parsedData.observaciones = limpiarTexto(parsedData.observaciones)
         }
@@ -181,6 +186,9 @@ const ChecklistCamaras = () => {
       } catch (error) {
         console.error('Error al cargar datos desde localStorage:', error)
       }
+    } else {
+      // Si no hay datos guardados, asegurar que la fecha sea la actual
+      setFormData(prev => ({ ...prev, fecha: fechaActual }))
     }
   }, [])
 
