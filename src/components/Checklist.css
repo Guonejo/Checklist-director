@@ -899,7 +899,7 @@
       border: 2px solid #d1fae5;
       border-radius: 10px;
       padding: 1rem;
-      gap: 0.75rem;
+      gap: 0.5rem;
       margin-bottom: 0;
       box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
     }
@@ -911,10 +911,10 @@
     .config-col {
       display: flex;
       flex-direction: column;
-      align-items: flex-start;
+      align-items: stretch;
       justify-content: flex-start;
       padding: 0;
-      gap: 0.4rem;
+      gap: 0;
       border: none;
       background: transparent;
       border-radius: 0;
@@ -922,12 +922,12 @@
 
     .config-col:first-child {
       font-weight: 700;
-      font-size: 1.1rem;
+      font-size: 1rem;
       color: #2ecc71;
       background: linear-gradient(135deg, #f0fdf4 0%, #d1fae5 100%);
       border: 2px solid #2ecc71;
-      padding: 0.75rem;
-      margin-bottom: 0.5rem;
+      padding: 0.6rem;
+      margin-bottom: 0.75rem;
       width: 100%;
       justify-content: center;
       align-items: center;
@@ -936,12 +936,7 @@
     }
 
     .config-col::before {
-      content: attr(data-label);
-      font-weight: 600;
-      font-size: 0.85rem;
-      color: #2ecc71;
-      width: 100%;
-      margin-bottom: 0.25rem;
+      display: none;
     }
 
     .config-col:first-child::before {
