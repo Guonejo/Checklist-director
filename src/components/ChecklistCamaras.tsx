@@ -505,16 +505,7 @@ const ChecklistCamaras = () => {
                 </div>
                 
                 <div className="camara-config-section">
-                  <h4>Configuraciones de cámaras:</h4>
                   <div className="camara-config-table">
-                    <div className="camara-config-header">
-                      <div className="config-col">Cámara</div>
-                      <div className="config-col">Diafragma</div>
-                      <div className="config-col">Temp. Color</div>
-                      <div className="config-col">Expos.</div>
-                      <div className="config-col">Ganancia</div>
-                      <div className="config-col">Vel. Obturador</div>
-                    </div>
                     <div className="camara-group">
                       <div className="config-row">
                         <div className="config-col">1 (G70)</div>
