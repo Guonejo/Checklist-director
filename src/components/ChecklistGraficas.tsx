@@ -150,13 +150,8 @@ const ChecklistGraficas = () => {
       const checked = (e.target as HTMLInputElement).checked
       setFormData(prev => ({ ...prev, [name]: checked }))
     } else {
-      // Limpiar texto para campos de texto (excepto fecha que es solo lectura)
-      if (name === 'designadoGraficas' || name === 'observaciones') {
-        const valorLimpio = limpiarTexto(value)
-        setFormData(prev => ({ ...prev, [name]: valorLimpio }))
-      } else {
-        setFormData(prev => ({ ...prev, [name]: value }))
-      }
+      // Permitir escribir normalmente, sin limpiar en tiempo real
+      setFormData(prev => ({ ...prev, [name]: value }))
     }
   }
 

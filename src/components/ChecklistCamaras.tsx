@@ -203,12 +203,8 @@ const ChecklistCamaras = () => {
       const checked = (e.target as HTMLInputElement).checked
       setFormData(prev => ({ ...prev, [name]: checked }))
     } else {
-      if (name === 'observaciones' || name === 'operador') {
-        const valorLimpio = limpiarTexto(value)
-        setFormData(prev => ({ ...prev, [name]: valorLimpio }))
-      } else {
-        setFormData(prev => ({ ...prev, [name]: value }))
-      }
+      // Permitir escribir normalmente, sin limpiar en tiempo real
+      setFormData(prev => ({ ...prev, [name]: value }))
     }
   }
 

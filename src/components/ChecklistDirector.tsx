@@ -212,11 +212,8 @@ const ChecklistDirector = () => {
         // Solo permitir números y máximo 2 caracteres
         const numericValue = value.replace(/[^0-9]/g, '').slice(0, 2)
         setFormData(prev => ({ ...prev, [name]: numericValue }))
-      } else if (name === 'observaciones') {
-        // Limpiar texto para el campo de observaciones
-        const valorLimpio = limpiarTexto(value)
-        setFormData(prev => ({ ...prev, [name]: valorLimpio }))
       } else {
+        // Permitir escribir normalmente, sin limpiar en tiempo real
         setFormData(prev => ({ ...prev, [name]: value }))
       }
     }
