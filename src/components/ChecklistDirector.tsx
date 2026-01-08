@@ -7,6 +7,15 @@ import './Checklist.css'
 
 const STORAGE_KEY = 'checklist-director-data'
 
+// Función para obtener la fecha local en formato YYYY-MM-DD
+const obtenerFechaLocal = (): string => {
+  const ahora = new Date()
+  const año = ahora.getFullYear()
+  const mes = String(ahora.getMonth() + 1).padStart(2, '0')
+  const dia = String(ahora.getDate()).padStart(2, '0')
+  return `${año}-${mes}-${dia}`
+}
+
 interface ChecklistDirectorData {
   // Información general
   director: string
@@ -93,7 +102,7 @@ const ChecklistDirector = () => {
   const navigate = useNavigate()
   const [formData, setFormData] = useState<ChecklistDirectorData>({
     director: '',
-    fecha: new Date().toISOString().split('T')[0],
+    fecha: obtenerFechaLocal(),
     version: '5.13',
     actividad1_ups: false,
     actividad2_atem_camara1: false,
@@ -173,7 +182,7 @@ const ChecklistDirector = () => {
 
   // Cargar datos desde localStorage al montar el componente
   useEffect(() => {
-    const fechaActual = new Date().toISOString().split('T')[0]
+    const fechaActual = obtenerFechaLocal()
     const savedData = localStorage.getItem(STORAGE_KEY)
     if (savedData) {
       try {

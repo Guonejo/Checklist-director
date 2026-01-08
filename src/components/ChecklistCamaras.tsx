@@ -7,6 +7,15 @@ import './Checklist.css'
 
 const STORAGE_KEY = 'checklist-camaras-data'
 
+// Función para obtener la fecha local en formato YYYY-MM-DD
+const obtenerFechaLocal = (): string => {
+  const ahora = new Date()
+  const año = ahora.getFullYear()
+  const mes = String(ahora.getMonth() + 1).padStart(2, '0')
+  const dia = String(ahora.getDate()).padStart(2, '0')
+  return `${año}-${mes}-${dia}`
+}
+
 interface ChecklistCamarasData {
   // Información general
   operador: string
@@ -102,7 +111,7 @@ const ChecklistCamaras = () => {
   const navigate = useNavigate()
   const [formData, setFormData] = useState<ChecklistCamarasData>({
     operador: '',
-    fecha: new Date().toISOString().split('T')[0],
+    fecha: obtenerFechaLocal(),
     version: '1.0',
     actividad1_camara1: false,
     actividad1_camara2: false,
@@ -167,7 +176,7 @@ const ChecklistCamaras = () => {
 
   // Cargar datos desde localStorage al montar el componente
   useEffect(() => {
-    const fechaActual = new Date().toISOString().split('T')[0]
+    const fechaActual = obtenerFechaLocal()
     const savedData = localStorage.getItem(STORAGE_KEY)
     if (savedData) {
       try {
