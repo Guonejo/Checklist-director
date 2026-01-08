@@ -55,6 +55,9 @@ interface ChecklistGraficasData {
   actividad28_cerrarProgramas: boolean
   actividad29_limpiarEstacion: boolean
 
+  // Observaciones
+  observaciones: string
+
   // Index signature para compatibilidad con pdfGenerator
   [key: string]: any
 }
@@ -92,7 +95,8 @@ const ChecklistGraficas = () => {
     actividad26_seleccionarImagenDoxologia: false,
     actividad27_reproducirVideoOutro: false,
     actividad28_cerrarProgramas: false,
-    actividad29_limpiarEstacion: false
+    actividad29_limpiarEstacion: false,
+    observaciones: ''
   })
 
   // Función para limpiar caracteres extraños del texto
@@ -607,6 +611,21 @@ const ChecklistGraficas = () => {
                   <span>Dejar estación de gráficas limpia y organizada</span>
                 </label>
               </div>
+            </div>
+          </div>
+
+          {/* Observaciones */}
+          <div className="form-section">
+            <h2>Observaciones, mejoras, problemas:</h2>
+            <div className="form-group">
+              <textarea
+                name="observaciones"
+                value={formData.observaciones}
+                onChange={handleChange}
+                rows={6}
+                placeholder="Ingrese observaciones, mejoras o problemas encontrados..."
+                className="observaciones-textarea"
+              />
             </div>
           </div>
 
