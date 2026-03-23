@@ -306,18 +306,18 @@
   align-items: center;
   gap: 0.75rem;
   padding: 1rem;
-  background: white;
+  background: var(--input-bg);
   border-radius: 10px;
-  border: 2px solid #d1fae5;
-  transition: all 0.3s ease;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  border: 2px solid var(--border-color);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: var(--shadow-input);
 }
 
 .checkbox-group:hover {
-  border-color: #2ecc71;
-  background: linear-gradient(135deg, #f0fdf4 0%, #ecfdf5 100%);
+  border-color: var(--border-focus);
+  background: var(--section-bg);
   transform: translateX(3px);
-  box-shadow: 0 4px 10px rgba(46, 204, 113, 0.2);
+  box-shadow: var(--shadow-hover);
 }
 
 .checkbox-group input[type="checkbox"] {
@@ -335,7 +335,7 @@
 .checkbox-group label {
   cursor: pointer;
   font-size: 0.95rem;
-  color: #555;
+  color: var(--text-primary);
   user-select: none;
 }
 
@@ -449,16 +449,16 @@
   gap: 1rem;
   margin-bottom: 1rem;
   padding: 1.25rem;
-  background: white;
+  background: var(--section-bg);
   border-radius: 12px;
-  border-left: 5px solid #2ecc71;
-  box-shadow: 0 2px 8px rgba(46, 204, 113, 0.15);
-  transition: all 0.3s ease;
+  border-left: 5px solid var(--btn-bg);
+  box-shadow: var(--shadow-soft);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
 }
 
 .actividad-item:hover {
-  box-shadow: 0 4px 15px rgba(46, 204, 113, 0.25);
+  box-shadow: var(--shadow-hover);
   transform: translateX(5px);
   border-left-width: 6px;
 }
