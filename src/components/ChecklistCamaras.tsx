@@ -217,6 +217,29 @@ const ChecklistCamaras = () => {
     const { name, value, type } = e.target
     if (type === 'checkbox') {
       const checked = (e.target as HTMLInputElement).checked
+      
+      // Exclusividad Sección 1
+      if (checked && name.startsWith('actividad1_camara')) {
+        setFormData(prev => ({ 
+          ...prev, 
+          actividad1_camara1: name === 'actividad1_camara1',
+          actividad1_camara2: name === 'actividad1_camara2',
+          actividad1_camara3: name === 'actividad1_camara3'
+        }))
+        return
+      }
+
+      // Exclusividad Sección 2
+      if (checked && name.startsWith('actividad2_tripode')) {
+        setFormData(prev => ({ 
+          ...prev, 
+          actividad2_tripode1: name === 'actividad2_tripode1',
+          actividad2_tripode2: name === 'actividad2_tripode2',
+          actividad2_tripode3: name === 'actividad2_tripode3'
+        }))
+        return
+      }
+
       setFormData(prev => ({ ...prev, [name]: checked }))
     } else {
       // Permitir escribir normalmente, sin limpiar en tiempo real

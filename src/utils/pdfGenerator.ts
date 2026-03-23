@@ -503,7 +503,7 @@ export const generarPDFDirector = (data: ChecklistDirectorData) => {
     doc.setFontSize(11)
     doc.setFont('helvetica', 'bold')
     doc.setTextColor(255, 152, 0)
-    doc.text('📝 Observaciones, mejoras, problemas:', margin + 3, yPosition + 2)
+    doc.text('Observaciones, mejoras, problemas:', margin + 3, yPosition + 2)
     yPosition += 10
     
     // Fondo para el texto de observaciones
@@ -1041,7 +1041,7 @@ export const generarPDFCamaras = (data: ChecklistCamarasData) => {
     doc.setFontSize(11)
     doc.setFont('helvetica', 'bold')
     doc.setTextColor(255, 152, 0)
-    doc.text('📝 Observaciones, mejoras, problemas:', margin + 3, yPosition + 2)
+    doc.text('Observaciones, mejoras, problemas:', margin + 3, yPosition + 2)
     yPosition += 10
     
     doc.setFillColor(255, 253, 245)
