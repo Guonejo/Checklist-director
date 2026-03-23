@@ -59,6 +59,10 @@ interface ChecklistCamarasData {
   actividad8_destaparLente: boolean
   actividad8_encenderCamara: boolean
   actividad8_ajustarHorizonte: boolean
+  // Selección de cámaras para configurar en punto 8
+  actividad8_selecc_camara1: boolean
+  actividad8_selecc_camara2: boolean
+  actividad8_selecc_camara3: boolean
   // Configuraciones de cámaras
   actividad8_camara1_diafragma: string
   actividad8_camara1_tempColor: string
@@ -135,6 +139,9 @@ const ChecklistCamaras = () => {
     actividad8_destaparLente: false,
     actividad8_encenderCamara: false,
     actividad8_ajustarHorizonte: false,
+    actividad8_selecc_camara1: false,
+    actividad8_selecc_camara2: false,
+    actividad8_selecc_camara3: false,
     actividad8_camara1_diafragma: '',
     actividad8_camara1_tempColor: '',
     actividad8_camara1_exposicion: '',
@@ -517,38 +524,111 @@ const ChecklistCamaras = () => {
                   </label>
                 </div>
                 
-                <div className="camara-settings">
-                  <div className="camara-group">
-                    <h4>Cámara 1 (G70)</h4>
-                    <div className="camara-inputs">
-                      <input type="text" name="actividad8_camara1_diafragma" value={formData.actividad8_camara1_diafragma} onChange={handleChange} placeholder="f/" className="tiny-input" />
-                      <input type="text" name="actividad8_camara1_tempColor" value={formData.actividad8_camara1_tempColor} onChange={handleChange} placeholder="kelvin" className="tiny-input" />
-                      <input type="text" name="actividad8_camara1_exposicion" value={formData.actividad8_camara1_exposicion} onChange={handleChange} placeholder="expos." className="tiny-input" />
-                      <input type="text" name="actividad8_camara1_ganancia" value={formData.actividad8_camara1_ganancia} onChange={handleChange} placeholder="(db)" className="tiny-input" />
-                      <input type="text" name="actividad8_camara1_velObturador" value={formData.actividad8_camara1_velObturador} onChange={handleChange} placeholder="/" className="tiny-input" />
-                    </div>
-                  </div>
-                  <div className="camara-group">
-                    <h4>Cámara 2 (G50)</h4>
-                    <div className="camara-inputs">
-                      <input type="text" name="actividad8_camara2_diafragma" value={formData.actividad8_camara2_diafragma} onChange={handleChange} placeholder="f/" className="tiny-input" />
-                      <input type="text" name="actividad8_camara2_tempColor" value={formData.actividad8_camara2_tempColor} onChange={handleChange} placeholder="kelvin" className="tiny-input" />
-                      <input type="text" name="actividad8_camara2_exposicion" value={formData.actividad8_camara2_exposicion} onChange={handleChange} placeholder="expos." className="tiny-input" />
-                      <input type="text" name="actividad8_camara2_ganancia" value={formData.actividad8_camara2_ganancia} onChange={handleChange} placeholder="(db)" className="tiny-input" />
-                      <input type="text" name="actividad8_camara2_velObturador" value={formData.actividad8_camara2_velObturador} onChange={handleChange} placeholder="/" className="tiny-input" />
-                    </div>
-                  </div>
-                  <div className="camara-group">
-                    <h4>Cámara 3 (G20)</h4>
-                    <div className="camara-inputs">
-                      <input type="text" name="actividad8_camara3_diafragma" value={formData.actividad8_camara3_diafragma} onChange={handleChange} placeholder="f/" className="tiny-input" />
-                      <input type="text" name="actividad8_camara3_tempColor" value={formData.actividad8_camara3_tempColor} onChange={handleChange} placeholder="kelvin" className="tiny-input" />
-                      <input type="text" name="actividad8_camara3_exposicion" value={formData.actividad8_camara3_exposicion} onChange={handleChange} placeholder="expos." className="tiny-input" />
-                      <input type="text" name="actividad8_camara3_ganancia" value={formData.actividad8_camara3_ganancia} onChange={handleChange} placeholder="(db)" className="tiny-input" />
-                      <input type="text" name="actividad8_camara3_velObturador" value={formData.actividad8_camara3_velObturador} onChange={handleChange} placeholder="/" className="tiny-input" />
-                    </div>
+                <div className="camara-selection">
+                  <p style={{ fontWeight: 600, color: '#495057', marginBottom: '0.5rem', marginTop: '1rem' }}>Seleccione cámara(s) a configurar:</p>
+                  <div className="sub-actividades" style={{ marginTop: 0 }}>
+                    <label className="checkbox-group">
+                      <input type="checkbox" name="actividad8_selecc_camara1" checked={formData.actividad8_selecc_camara1} onChange={handleChange} />
+                      <span>Configurar Cámara 1 (G70)</span>
+                    </label>
+                    <label className="checkbox-group">
+                      <input type="checkbox" name="actividad8_selecc_camara2" checked={formData.actividad8_selecc_camara2} onChange={handleChange} />
+                      <span>Configurar Cámara 2 (G50)</span>
+                    </label>
+                    <label className="checkbox-group">
+                      <input type="checkbox" name="actividad8_selecc_camara3" checked={formData.actividad8_selecc_camara3} onChange={handleChange} />
+                      <span>Configurar Cámara 3 (G20)</span>
+                    </label>
                   </div>
                 </div>
+
+                {(formData.actividad8_selecc_camara1 || formData.actividad8_selecc_camara2 || formData.actividad8_selecc_camara3) && (
+                  <div className="camara-settings">
+                    {formData.actividad8_selecc_camara1 && (
+                      <div className="camara-group">
+                        <h4>Cámara 1 (G70)</h4>
+                        <div className="camara-inputs">
+                          <div className="tooltip-container">
+                            <label>Diafragma: <span className="tooltip-icon">i</span><span className="tooltip-text">Apertura del objetivo (ej. f/1.8 a f/22)</span></label>
+                            <input type="text" name="actividad8_camara1_diafragma" value={formData.actividad8_camara1_diafragma} onChange={handleChange} placeholder="f/" className="tiny-input" />
+                          </div>
+                          <div className="tooltip-container">
+                            <label>Temp. Color: <span className="tooltip-icon">i</span><span className="tooltip-text">Balance de blancos en Kelvin (ej. 3200K, 5600K)</span></label>
+                            <input type="text" name="actividad8_camara1_tempColor" value={formData.actividad8_camara1_tempColor} onChange={handleChange} placeholder="kelvin" className="tiny-input" />
+                          </div>
+                          <div className="tooltip-container">
+                            <label>Exposición: <span className="tooltip-icon">i</span><span className="tooltip-text">Nivel de brillo general de la imagen</span></label>
+                            <input type="text" name="actividad8_camara1_exposicion" value={formData.actividad8_camara1_exposicion} onChange={handleChange} placeholder="expos." className="tiny-input" />
+                          </div>
+                          <div className="tooltip-container">
+                            <label>Ganancia: <span className="tooltip-icon">i</span><span className="tooltip-text">Sensibilidad (ISO) en dB. Evitar valores muy altos para no generar ruido</span></label>
+                            <input type="text" name="actividad8_camara1_ganancia" value={formData.actividad8_camara1_ganancia} onChange={handleChange} placeholder="(db)" className="tiny-input" />
+                          </div>
+                          <div className="tooltip-container">
+                            <label>Obturador: <span className="tooltip-icon">i</span><span className="tooltip-text">Velocidad de obturación (Shutter Speed, ej. 1/50, 1/100)</span></label>
+                            <input type="text" name="actividad8_camara1_velObturador" value={formData.actividad8_camara1_velObturador} onChange={handleChange} placeholder="/" className="tiny-input" />
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                    
+                    {formData.actividad8_selecc_camara2 && (
+                      <div className="camara-group">
+                        <h4>Cámara 2 (G50)</h4>
+                        <div className="camara-inputs">
+                          <div className="tooltip-container">
+                            <label>Diafragma: <span className="tooltip-icon">i</span><span className="tooltip-text">Apertura del objetivo (ej. f/1.8 a f/22)</span></label>
+                            <input type="text" name="actividad8_camara2_diafragma" value={formData.actividad8_camara2_diafragma} onChange={handleChange} placeholder="f/" className="tiny-input" />
+                          </div>
+                          <div className="tooltip-container">
+                            <label>Temp. Color: <span className="tooltip-icon">i</span><span className="tooltip-text">Balance de blancos en Kelvin (ej. 3200K, 5600K)</span></label>
+                            <input type="text" name="actividad8_camara2_tempColor" value={formData.actividad8_camara2_tempColor} onChange={handleChange} placeholder="kelvin" className="tiny-input" />
+                          </div>
+                          <div className="tooltip-container">
+                            <label>Exposición: <span className="tooltip-icon">i</span><span className="tooltip-text">Nivel de brillo general de la imagen</span></label>
+                            <input type="text" name="actividad8_camara2_exposicion" value={formData.actividad8_camara2_exposicion} onChange={handleChange} placeholder="expos." className="tiny-input" />
+                          </div>
+                          <div className="tooltip-container">
+                            <label>Ganancia: <span className="tooltip-icon">i</span><span className="tooltip-text">Sensibilidad (ISO) en dB. Evitar valores muy altos para no generar ruido</span></label>
+                            <input type="text" name="actividad8_camara2_ganancia" value={formData.actividad8_camara2_ganancia} onChange={handleChange} placeholder="(db)" className="tiny-input" />
+                          </div>
+                          <div className="tooltip-container">
+                            <label>Obturador: <span className="tooltip-icon">i</span><span className="tooltip-text">Velocidad de obturación (Shutter Speed, ej. 1/50, 1/100)</span></label>
+                            <input type="text" name="actividad8_camara2_velObturador" value={formData.actividad8_camara2_velObturador} onChange={handleChange} placeholder="/" className="tiny-input" />
+                          </div>
+                        </div>
+                      </div>
+                    )}
+
+                    {formData.actividad8_selecc_camara3 && (
+                      <div className="camara-group">
+                        <h4>Cámara 3 (G20)</h4>
+                        <div className="camara-inputs">
+                          <div className="tooltip-container">
+                            <label>Diafragma: <span className="tooltip-icon">i</span><span className="tooltip-text">Apertura del objetivo (ej. f/1.8 a f/22)</span></label>
+                            <input type="text" name="actividad8_camara3_diafragma" value={formData.actividad8_camara3_diafragma} onChange={handleChange} placeholder="f/" className="tiny-input" />
+                          </div>
+                          <div className="tooltip-container">
+                            <label>Temp. Color: <span className="tooltip-icon">i</span><span className="tooltip-text">Balance de blancos en Kelvin (ej. 3200K, 5600K)</span></label>
+                            <input type="text" name="actividad8_camara3_tempColor" value={formData.actividad8_camara3_tempColor} onChange={handleChange} placeholder="kelvin" className="tiny-input" />
+                          </div>
+                          <div className="tooltip-container">
+                            <label>Exposición: <span className="tooltip-icon">i</span><span className="tooltip-text">Nivel de brillo general de la imagen</span></label>
+                            <input type="text" name="actividad8_camara3_exposicion" value={formData.actividad8_camara3_exposicion} onChange={handleChange} placeholder="expos." className="tiny-input" />
+                          </div>
+                          <div className="tooltip-container">
+                            <label>Ganancia: <span className="tooltip-icon">i</span><span className="tooltip-text">Sensibilidad (ISO) en dB. Evitar valores muy altos para no generar ruido</span></label>
+                            <input type="text" name="actividad8_camara3_ganancia" value={formData.actividad8_camara3_ganancia} onChange={handleChange} placeholder="(db)" className="tiny-input" />
+                          </div>
+                          <div className="tooltip-container">
+                            <label>Obturador: <span className="tooltip-icon">i</span><span className="tooltip-text">Velocidad de obturación (Shutter Speed, ej. 1/50, 1/100)</span></label>
+                            <input type="text" name="actividad8_camara3_velObturador" value={formData.actividad8_camara3_velObturador} onChange={handleChange} placeholder="/" className="tiny-input" />
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                )}
               </div>
             </div>
           </div>

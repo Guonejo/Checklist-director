@@ -659,7 +659,7 @@ export const generarPDFGraficas = (data: ChecklistGraficasData) => {
   // Definir todas las actividades
   const actividades = [
     { key: 'actividad1_prenderPC', text: 'Prender PC Gráficas' },
-    { key: 'actividad2_correo', text: 'Introducir correo (medios_iuc@gmail.com)' },
+    { key: 'actividad2_correo', text: 'Introducir correo (redesucristiana@gmail.com)' },
     { key: 'actividad3_perfilTransmision', text: 'Ingresar a perfil de transmisión o unión cristiana' },
     { key: 'actividad4_whatsappQR', text: 'Conectar WhatsApp mediante código QR en Google' },
     { key: 'actividad5_descargarMaterial', text: 'Descargar material enviado a chat transmisiones en WhatsApp' },
@@ -677,12 +677,12 @@ export const generarPDFGraficas = (data: ChecklistGraficasData) => {
     { key: 'actividad17_aplicarMedios', text: 'Aplicar medios en presenter' },
     { key: 'actividad18_importarMedios', text: 'Importar medios (avisos y doxología)' },
     { key: 'actividad19_abrirPPT', text: 'Abrir ppt en carpeta descargas' },
-    { key: 'actividad20_editarSlice', text: 'Editar slice en presenter' },
+    { key: 'actividad20_editarSlice', text: 'Editar slide en presenter' },
     { key: 'actividad21_editarPPT', text: 'Editar ppt en pantalla verde (nombre pastor y titulo culto, tomar versículos de ppt y pegar sin formato en plantilla presenter) (máximo 3 líneas)' },
     { key: 'actividad22_sincronizarDatos', text: 'Ahora en presenter sincronizar datos' },
     { key: 'actividad23_reproducirVideoIntro', text: 'Reproducir video introducción (iniciar 09:50 am)' },
     { key: 'actividad24_bloqueAlabanzas', text: 'Bloque 1 y 2 de alabanzas (seleccionar alabanza y letra)' },
-    { key: 'actividad25_seleccionarVersiculo', text: 'Durante predica seleccionar diapositiva con versículo que lee el pastor y dejar tiempo prudente (app 10 seg post lectura)' },
+    { key: 'actividad25_seleccionarVersiculo', text: 'Durante prédica seleccionar diapositiva con versículo que lee el pastor y dejar tiempo prudente (app 10 seg post lectura)' },
     { key: 'actividad26_seleccionarImagenDoxologia', text: 'En doxología seleccionar imagen en barra izquierda (durante la lectura)' },
     { key: 'actividad27_reproducirVideoOutro', text: 'Reproducir video outro bajo orden del director' },
     { key: 'actividad28_cerrarProgramas', text: 'Cerrar programas y apagar pc gráficas' },

@@ -213,14 +213,14 @@ const ChecklistGraficas = () => {
 
     // Predica (19-22)
     if (!formData.actividad19_abrirPPT) faltantes.push('19. Abrir ppt en carpeta descargas')
-    if (!formData.actividad20_editarSlice) faltantes.push('20. Editar slice en presenter')
+    if (!formData.actividad20_editarSlice) faltantes.push('20. Editar slide en presenter')
     if (!formData.actividad21_editarPPT) faltantes.push('21. Editar ppt en pantalla verde')
     if (!formData.actividad22_sincronizarDatos) faltantes.push('22. Sincronizar datos en presenter')
 
     // Durante la transmisión (23-27)
     if (!formData.actividad23_reproducirVideoIntro) faltantes.push('23. Reproducir video introducción')
     if (!formData.actividad24_bloqueAlabanzas) faltantes.push('24. Bloque 1 y 2 de alabanzas')
-    if (!formData.actividad25_seleccionarVersiculo) faltantes.push('25. Seleccionar versículo durante predica')
+    if (!formData.actividad25_seleccionarVersiculo) faltantes.push('25. Seleccionar versículo durante prédica')
     if (!formData.actividad26_seleccionarImagenDoxologia) faltantes.push('26. Seleccionar imagen en doxología')
     if (!formData.actividad27_reproducirVideoOutro) faltantes.push('27. Reproducir video outro')
 
@@ -312,7 +312,7 @@ const ChecklistGraficas = () => {
               <div className="actividad-content">
                 <label className="checkbox-group">
                   <input type="checkbox" name="actividad2_correo" checked={formData.actividad2_correo} onChange={handleChange} />
-                  <span>Introducir correo (medios_iuc@gmail.com)</span>
+                  <span>Introducir correo (redesucristiana@gmail.com)</span>
                 </label>
               </div>
             </div>
@@ -495,7 +495,7 @@ const ChecklistGraficas = () => {
 
           {/* Predica */}
           <div className="form-section">
-            <h2>5. Predica</h2>
+            <h2>5. Prédica</h2>
             
             <div className="actividad-item">
               <div className="actividad-number">19</div>
@@ -512,7 +512,7 @@ const ChecklistGraficas = () => {
               <div className="actividad-content">
                 <label className="checkbox-group">
                   <input type="checkbox" name="actividad20_editarSlice" checked={formData.actividad20_editarSlice} onChange={handleChange} />
-                  <span>Editar slice en presenter</span>
+                  <span>Editar slide en presenter</span>
                 </label>
               </div>
             </div>
@@ -567,7 +567,7 @@ const ChecklistGraficas = () => {
               <div className="actividad-content">
                 <label className="checkbox-group">
                   <input type="checkbox" name="actividad25_seleccionarVersiculo" checked={formData.actividad25_seleccionarVersiculo} onChange={handleChange} />
-                  <span>Durante predica seleccionar diapositiva con versículo que lee el pastor y dejar tiempo prudente (app 10 seg post lectura)</span>
+                  <span>Durante prédica seleccionar diapositiva con versículo que lee el pastor y dejar tiempo prudente (app 10 seg post lectura)</span>
                 </label>
               </div>
             </div>
